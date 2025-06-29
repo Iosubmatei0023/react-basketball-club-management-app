@@ -1,20 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Navbar from "../components/HPcomponents/Navbar";
+import HeroSection from "../components/HPcomponents/HeroSection";
+import FeaturesGrid from "../components/HPcomponents/FeaturesGrid";
+import BenefitsSection from "../components/HPcomponents/BenefitsSection";
 
 function HomePage() {
   return (
-    <div className="home-container">
-      <nav className="nav-bar">
-        <Link to="/account" className="account-button">
-          Account
-        </Link>
-      </nav>
-      <main className="main-content">
-        <h1>Welcome to Basketball Club Management</h1>
-        <p>
-          Your one-stop solution for basketball club subscriptions and payments
-        </p>
-      </main>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem',
+      background: '#f8f9fa'
+    }}>
+      <Navbar />
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '3rem',
+        maxWidth: '1200px',
+        width: '100%',
+        padding: '0 1rem'
+      }}>
+        <HeroSection />
+        <FeaturesGrid />
+        <BenefitsSection />
+      </div>
     </div>
   );
 }

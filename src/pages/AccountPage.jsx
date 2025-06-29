@@ -1,57 +1,84 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 function AccountPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Here you would implement the actual authentication logic
-    // For now, we'll just navigate to the subscriptions page
-    navigate("/subscriptions");
-  };
+  if (!user) {
+    return (
+      <div className="account-container">
+        <div className="account-box">
+          <div className="login-header">
+            <h2>Welcome Back</h2>
+            <p>Please sign in to access your account</p>
+          </div>
+          <button 
+            onClick={() => navigate('/login')}
+            className="login-button"
+            style={{ width: '100%' }}
+          >
+            <span>Sign In to Your Account</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="account-container">
-      <div className="account-form">
-        <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+      <div className="account-box">
+        <Link to="/" className="home-button">← Back to Home</Link>
+        <div className="account-header">
+          <h2>My Account</h2>
+          <p>Manage your basketball club account</p>
+        </div>
+        
+        <div className="profile-section">
+          <div className="profile-avatar">
+            <span>{userData.name[0]}</span>
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          
+          <div className="profile-info">
+            <label>Name:</label>
+            <span>{userData.name}</span>
           </div>
-          <button type="submit" className="submit-btn">
-            {isLogin ? "Login" : "Sign Up"}
+          
+          <div className="profile-info">
+            <label>Email:</label>
+            <span>{userData.email}</span>
+          </div>
+          
+          <div className="profile-info">
+            <label>Role:</label>
+            <span>{userData.role}</span>
+          </div>
+          
+          <div className="profile-info">
+            <label>Membership:</label>
+            <span>{userData.membership}</span>
+          </div>
+          
+          <div className="profile-info">
+            <label>Joined:</label>
+            <span>{userData.joinDate}</span>
+          </div>
+        </div>
+
+        <div className="profile-section">
+          <h3>Actions</h3>
+          <button className="edit-profile-btn">Edit Profile</button>
+          <button 
+            onClick={logout} 
+            className="edit-profile-btn"
+            style={{ marginTop: '1rem' }}
+          >
+            Logout
           </button>
-        </form>
-        <p>
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button onClick={() => setIsLogin(!isLogin)} className="toggle-btn">
-            {isLogin ? "Sign Up" : "Login"}
-          </button>
-        </p>
-        <Link to="/" className="back-link">
-          Back to Home
-        </Link>
+        </div>
       </div>
     </div>
   );

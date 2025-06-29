@@ -1,0 +1,31 @@
+.benefits-section {
+  background: #7cb0ff;
+  padding: 2rem 2.5rem 2rem 2rem;
+  border-radius: 12px;
+  max-width: 1200px;
+  width: 1150px;
+  margin: 1rem auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.benefits-content {
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.benefits-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.benefits-item {
+  margin: 0.5rem 0;
+  padding: 0;
+}

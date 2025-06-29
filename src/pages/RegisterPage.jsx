@@ -1,40 +1,28 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { useAuth } from "../contexts/AuthContext";
 
-const LoginPage = () => {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Simulate login (replace with actual API call)
-    const userData = {
-      name: "John Doe",
-      email: email,
-      role: "Member",
-      membership: "Active",
-      joinDate: "June 2023"
-    };
-    
-    login(userData);
-    navigate("/account");
-  };
-
+const RegisterPage = () => {
   return (
     <div className="login-container">
       <div className="login-box">
         <Link to="/" className="home-button">← Back to Home</Link>
         <div className="login-header">
-          <h2>Welcome Back</h2>
-          <p>Sign in to continue to Basketball Club</p>
+          <h2>Create Account</h2>
+          <p>Sign up to start your basketball journey</p>
         </div>
         <form className="login-form" autoComplete="on">
+          <div className="form-group">
+            <label htmlFor="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Enter your full name"
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
@@ -52,14 +40,23 @@ const LoginPage = () => {
               type="password"
               id="password"
               name="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               required
-              placeholder="Enter your password"
+              placeholder="Create a password"
             />
-            <a href="#" className="forgot-password">Forgot Password?</a>
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              required
+              placeholder="Confirm your password"
+            />
           </div>
           <button type="submit" className="login-button">
-            <span>Sign In</span>
+            <span>Sign Up</span>
           </button>
         </form>
         <div className="auth-options">
@@ -72,11 +69,11 @@ const LoginPage = () => {
           </button>
         </div>
         <p className="signup-text">
-          Don't have an account? <Link to="/register">Register</Link>
+          Already have an account? <Link to="/login">Sign In</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
