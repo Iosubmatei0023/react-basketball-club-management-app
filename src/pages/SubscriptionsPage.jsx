@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import '../styles/subscriptions.css';
 
 function SubscriptionsPage() {
   const navigate = useNavigate();
@@ -76,20 +77,36 @@ function SubscriptionsPage() {
         marginBottom: '3rem'
       }}>
         {subscriptions.map((subscription) => (
-          <div key={subscription.id} style={{
-            background: 'white',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            textAlign: 'center'
-          }}>
-            <h3 style={{
+          <div key={subscription.id} 
+            onMouseEnter={(e) => {
+              const title = e.currentTarget.querySelector('.plan-title');
+              const price = e.currentTarget.querySelector('.plan-price');
+              if (title) title.style.color = '#ffb07c';
+              if (price) price.style.color = '#ffb07c';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(255, 176, 124, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              const title = e.currentTarget.querySelector('.plan-title');
+              const price = e.currentTarget.querySelector('.plan-price');
+              if (title) title.style.color = '#7cb0ff';
+              if (price) price.style.color = '#7cb0ff';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            }}
+            style={{
+              background: 'white',
+              padding: '2rem',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              transition: 'all 0.3s ease',
+              textAlign: 'center'
+            }}>
+            <h3 className="plan-title" style={{
               color: '#7cb0ff',
               fontSize: '1.5rem',
               marginBottom: '1rem',
               fontWeight: '600'
             }}>{subscription.name}</h3>
-            <p style={{
+            <p className="plan-price" style={{
               fontSize: '2rem',
               color: '#7cb0ff',
               fontWeight: '700',
@@ -126,17 +143,20 @@ function SubscriptionsPage() {
                 </li>
               ))}
             </ul>
-            <Link to="/account" style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.75rem 1.5rem',
-              background: '#7cb0ff',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '8px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+            <Link to="/account" 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffb07c'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#7cb0ff'}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0.75rem 1.5rem',
+                background: '#7cb0ff',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontWeight: '600',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                transition: 'background-color 0.3s ease'
             }}>
               Subscribe
             </Link>

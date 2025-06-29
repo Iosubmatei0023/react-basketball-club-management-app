@@ -7,6 +7,7 @@ import SubscriptionsPage from "./pages/SubscriptionsPage";
 import LoginPage from "./pages/LoginPage";
 import PaymentPage from "./pages/PaymentPage";
 import RegisterPage from "./pages/RegisterPage";
+import Gallery from "./pages/Gallery";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./styles/main.css";
 
@@ -14,14 +15,17 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/subscriptions" element={<SubscriptionsPage />} />
-          <Route path="/payment/:planId" element={<PaymentPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
+        <div style={{ marginTop: '4rem' }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/subscriptions" element={<SubscriptionsPage />} />
+            <Route path="/payment/:planId" element={<PaymentPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/gallery" element={<Gallery />} />
+          </Routes>
+        </div>
       </AuthProvider>
     </Router>
   </StrictMode>
