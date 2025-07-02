@@ -7,7 +7,7 @@ import SubscriptionsPage from "./pages/SubscriptionsPage";
 import LoginPage from "./pages/LoginPage";
 import PaymentPage from "./pages/PaymentPage";
 import RegisterPage from "./pages/RegisterPage";
-import Gallery from "./pages/Gallery";
+import Events from "./pages/Events";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./styles/main.css";
 
@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/payment/:planId" element={<PaymentPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/events" element={<Events />} />
           </Routes>
         </div>
       </AuthProvider>

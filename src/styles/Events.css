@@ -1,0 +1,343 @@
+.events-page {
+  padding: 3rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.events-title {
+  color: #ffb07c;
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.future-events-title {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  font-weight: 600;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-left: 1.5rem;
+}
+
+.past-events-title {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  padding-left: 1.5rem;
+}
+
+.events-container {
+  padding: 1.5rem;
+}
+
+.events-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: nowrap;
+}
+
+.event-card {
+  background: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.event-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+  pointer-events: none;
+}
+
+.event-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 2rem;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), white);
+}
+
+.event-title {
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.event-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.event-description {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.event-button {
+  align-self: flex-end;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* One-time transition animation */
+@keyframes cardTransition {
+  0% {
+    background: white;
+  }
+  100% {
+    background: #ffb07c;
+  }
+}
+
+/* Stage 1: White to Orange transition */
+.event-card.stage-1 {
+  background: white;
+  animation: cardTransition 1s ease-in-out forwards;
+}
+
+.event-card.stage-1 .event-title,
+.event-card.stage-1 .event-date,
+.event-card.stage-1 .event-description {
+  color: #666666;
+}
+
+.event-card.stage-1 .event-button {
+  color: white;
+  background: transparent;
+  border: 2px solid white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.event-card.stage-1:hover .event-button {
+  background: white;
+  color: #ffb07c;
+  transform: translateY(-2px);
+}
+
+/* Stage 2: Orange state */
+.event-card.stage-2 {
+  background: #ffb07c;
+}
+
+.event-card.stage-2 .event-title,
+.event-card.stage-2 .event-date,
+.event-card.stage-2 .event-description {
+  color: #ffb07c;
+}
+
+.event-card.stage-2 .event-button {
+  color: #ffb07c;
+  background: transparent;
+  border: 2px solid #ffb07c;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.event-card.stage-2:hover .event-button {
+  background: #ffb07c;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Stage 3: White with orange text */
+.event-card.stage-3 {
+  background: white;
+}
+
+.event-card.stage-3 .event-title,
+.event-card.stage-3 .event-date,
+.event-card.stage-3 .event-description {
+  color: #ffb07c;
+}
+
+.event-card.stage-3 .event-button {
+  color: white;
+  background: transparent;
+  border: 2px solid white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.event-card.stage-3:hover .event-button {
+  background: white;
+  color: #ffb07c;
+  transform: translateY(-2px);
+}
+
+.event-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-card.orange:hover {
+  background: #ffb07c;
+  border: 2px solid #ffb07c;
+  box-shadow: 0 0 10px rgba(255, 176, 124, 0.2);
+}
+
+.event-card.blue:hover {
+  background: #7cb0ff;
+  border: 2px solid #7cb0ff;
+  box-shadow: 0 0 10px rgba(124, 176, 255, 0.2);
+}
+
+.event-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-card:hover .event-button {
+  background: white;
+  transform: scale(1.05);
+}
+
+.event-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-title {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.event-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.event-description {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.event-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  align-self: flex-start;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: white !important;
+}
+
+.event-button.orange {
+  background-color: #ffb07c;
+}
+
+.event-button.blue {
+  background-color: #7cb0ff;
+}
+
+.event-card:hover .event-button {
+  background: white;
+  color: #7cb0ff !important;
+  transform: scale(1.05);
+  animation: pulse 0.5s ease-in-out;
+}
+.event-card.orange:hover .event-button {
+  background: #7cb0ff;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+.event-card.blue:hover .event-button {
+  background: #ffb07c;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+.event-card:hover .event-button {
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
