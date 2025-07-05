@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
-const EventsNavbar = () => {
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
+const GalleryNavbar = () => {
   return (
     <nav style={{
       position: 'fixed',
@@ -24,61 +21,51 @@ const EventsNavbar = () => {
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        {user ? (
-          <button
-            onClick={async () => {
-              try {
-                await logout();
-                navigate('/login');
-              } catch (error) {
-                console.error('Logout error:', error);
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              transition: 'all 0.3s ease',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer'
-            }}>
-            Sign Out
-          </button>
-        ) : (
-          <Link to="/login"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              transition: 'all 0.3s ease'
-            }}>
-            Sign In
-          </Link>
-        )}
+        <Link to="/account"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+            e.currentTarget.style.color = '#7cb0ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            e.currentTarget.style.color = 'white';
+          }}
+          style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            transition: 'all 0.3s ease'
+          }}>
+          My Account
+        </Link>
         
         <div style={{
           display: 'flex',
           gap: '0.5rem'
         }}>
+          <Link to="/plans"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+              e.currentTarget.style.color = '#7cb0ff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+              e.currentTarget.style.color = 'white';
+            }}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              fontSize: '1rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+            Plans
+          </Link>
           <Link to="/events"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
@@ -101,7 +88,7 @@ const EventsNavbar = () => {
             }}>
             Events
           </Link>
-          <Link to="/gallery"
+          <Link to="/"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
               e.currentTarget.style.color = '#7cb0ff';
@@ -121,29 +108,7 @@ const EventsNavbar = () => {
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
             }}>
-            Gallery
-          </Link>
-          <Link to="/" 
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              fontSize: '1rem',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-            Home Page
+            Homepage
           </Link>
         </div>
       </div>
@@ -151,4 +116,4 @@ const EventsNavbar = () => {
   );
 };
 
-export default EventsNavbar;
+export default GalleryNavbar;

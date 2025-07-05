@@ -8,14 +8,16 @@ import LoginPage from "./pages/LoginPage";
 import PaymentPage from "./pages/PaymentPage";
 import RegisterPage from "./pages/RegisterPage";
 import Events from "./pages/Events";
+import GalleryPage from "./pages/GalleryPage";
+import Plans from "./pages/Plans";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./styles/main.css";
-
+//import {Auth} from "./components/Auth";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
       <AuthProvider>
-        <div style={{ marginTop: '4rem' }}>
+        <div style={{ marginTop: "4rem" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
@@ -24,6 +26,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/plans" element={<Plans />} />
           </Routes>
         </div>
       </AuthProvider>

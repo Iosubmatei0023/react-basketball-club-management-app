@@ -20,11 +20,12 @@
 
 .account-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
-.account-header h2 {
-  color: #7cb0ff;
+.account-header h1 {
+  color: #333;
+  font-size: 1.8rem;
   margin-bottom: 0.5rem;
 }
 
@@ -33,56 +34,129 @@
   font-size: 0.9rem;
 }
 
+.loading-header {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-header h2 {
+  color: #7cb0ff;
+  margin-bottom: 0.5rem;
+}
+
+.loading-header p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
 .profile-section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
 }
 
 .profile-section h3 {
   color: #7cb0ff;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .profile-info {
   display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.info-item {
+  display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.profile-info label {
+.info-icon {
+  color: #7cb0ff;
+  font-size: 1.2rem;
+}
+
+.info-label {
   color: #666;
   font-weight: 500;
+  flex: 0 0 120px;
 }
 
-.profile-info span {
+.info-value {
   color: #333;
   font-weight: 600;
 }
 
-.profile-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #ffb07c;
+.info-value.active {
+  color: #4CAF50;
+}
+
+.actions-section {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.action-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 1.5rem;
-}
-
-.edit-profile-btn {
-  background: #ffb07c;
-  color: white;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  padding: 0.5rem 1rem;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.edit-profile-btn:hover {
-  background: #e08a59;
+.edit-btn {
+  background: #7cb0ff;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #669eff;
+}
+
+.logout-btn {
+  background: #ff4444;
+  color: white;
+}
+
+.logout-btn:hover {
+  background: #ff2a2a;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #7cb0ff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 2rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.home-link:hover {
+  background: rgba(124, 176, 255, 0.1);
+  color: #669eff;
+}
+
+.home-link .fa-home {
+  font-size: 1.1rem;
 }

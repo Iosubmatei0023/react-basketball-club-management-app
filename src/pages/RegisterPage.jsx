@@ -1,9 +1,74 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { useAuth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const { register, signInWithGoogle } = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const user = await register(email, password, name);
+      
+      // Get user data from Firebase
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        role: "Member",
+        membership: "Active",
+        joinDate: new Date().toLocaleDateString()
+      };
+      
+      navigate("/account");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError("");
+    
+    try {
+      const user = await signInWithGoogle();
+      
+      // Get user data from Firebase
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        role: "Member",
+        membership: "Active",
+        joinDate: new Date().toLocaleDateString()
+      };
+      
+      navigate("/account");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -12,7 +77,7 @@ const RegisterPage = () => {
           <h2>Create Account</h2>
           <p>Sign up to start your basketball journey</p>
         </div>
-        <form className="login-form" autoComplete="on">
+        <form className="login-form" autoComplete="on" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <input
@@ -21,6 +86,8 @@ const RegisterPage = () => {
               name="name"
               required
               placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -32,6 +99,8 @@ const RegisterPage = () => {
               autoComplete="username"
               required
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -43,6 +112,8 @@ const RegisterPage = () => {
               autoComplete="new-password"
               required
               placeholder="Create a password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -53,19 +124,24 @@ const RegisterPage = () => {
               name="confirm-password"
               required
               placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="login-button">
-            <span>Sign Up</span>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
         <div className="auth-options">
           <div className="separator">
             <span>or</span>
           </div>
-          <button className="social-login">
-            <FontAwesomeIcon icon={faGoogle} />
-            Continue with Google
+          <button className="social-login" onClick={handleGoogleSignIn} disabled={loading}>
+            {loading ? "Signing In..." : <>
+              <FontAwesomeIcon icon={faGoogle} />
+              Continue with Google
+            </>}
           </button>
         </div>
         <p className="signup-text">

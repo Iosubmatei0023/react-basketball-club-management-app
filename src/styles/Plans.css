@@ -1,0 +1,211 @@
+.plans-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 2rem 0;
+}
+
+.plans-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.plans-title {
+  color: #ffb07c;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 2rem 1rem;
+}
+
+.plan-card {
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+}
+
+.plan-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  text-align: center;
+  max-width: 280px;
+}
+
+.plan-card.basic {
+  background: linear-gradient(145deg, white 0%, #f8f8f8 100%);
+  border: 2px solid #f0f0f0;
+}
+
+.plan-card.pro {
+  background: linear-gradient(145deg, white 0%, #f5f5f5 100%);
+  border: 2px solid #e0e0e0;
+}
+
+.plan-card.premium {
+  background: linear-gradient(145deg, white 0%, #f0f0f0 100%);
+  border: 2px solid #d0d0d0;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(124, 176, 255, 0.4);
+}
+
+.plan-card.basic:hover {
+  box-shadow: 0 0 40px rgba(124, 176, 255, 0.4);
+  background: linear-gradient(145deg, white 0%, #f8f8f8 100%, #f8f8f8 100%);
+}
+
+.plan-card.pro:hover {
+  background: linear-gradient(145deg, white 0%, #f5f5f5 100%, #f5f5f5 100%);
+}
+
+.plan-card.premium {
+  background: linear-gradient(145deg, white 0%, #f0f0f0 100%);
+  border: 2px solid #d0d0d0;
+}
+
+.plan-card.premium:hover {
+  background: linear-gradient(145deg, white 0%, #f0f0f0 100%, #f0f0f0 100%);
+}
+
+}
+
+.plan-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.plan-card.basic .plan-content {
+  margin-top: 4rem;
+  padding-top: 1rem;
+}
+
+.plan-card.pro .plan-content {
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.plan-card.premium .plan-content {
+  margin-top: 0;
+  padding-top: 1rem;
+}
+
+.plan-title {
+  color: #333;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+  left: 50%;
+  width: 120%;
+}
+
+.plan-price {
+  color: #ffb07c;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  transition: color 0.3s ease;
+}
+
+.plan-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  text-align: center;
+  max-width: 280px;
+}
+
+.plan-feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.plan-card.basic:hover .plan-title,
+.plan-card.basic:hover .plan-price {
+  color: #cd7f32; /* Bronze color */
+}
+
+.plan-card.pro:hover .plan-title,
+.plan-card.pro:hover .plan-price {
+  color: #c0c0c0; /* Silver color */
+}
+
+.plan-card.premium:hover .plan-title,
+.plan-card.premium:hover .plan-price {
+  color: #ffd700; /* Gold color */
+}
+
+.feature-icon {
+  color: #ffb07c;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.plan-button {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 176, 255, 0.4);
+  background: linear-gradient(145deg, #5c99ff 0%, #4a88ff 100%);
+}
+
+.plan-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(124, 176, 255, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease;
+}
+
+.plan-button:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+}

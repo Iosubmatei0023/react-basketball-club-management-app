@@ -1,44 +1,55 @@
 import React from 'react';
-import Gallery from '../components/Gallery';
 import '../styles/Gallery.css';
+import GalleryNavbar from '../components/GalleryNavbar';
+import Gallery from './Gallery';
 
 const GalleryPage = () => {
-  const galleryImages = [
+  const categories = [
     {
-      url: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=800',
-      title: 'Game Day',
-      description: 'Intense match against rivals'
+      title: 'Our Arena',
+      description: 'The home of our basketball dreams'
     },
     {
-      url: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
-      title: 'Team Celebration',
-      description: 'Winning the championship'
+      title: 'Our Equipment',
+      description: 'Professional-grade gear and technology'
     },
     {
-      url: 'https://images.unsplash.com/photo-1517832607807-9c04dcef353b?w=800',
-      title: 'Practice Session',
-      description: 'Hard work pays off'
+      title: 'Training Moments',
+      description: 'Where champions are made'
     },
     {
-      url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800',
-      title: 'Game Action',
-      description: 'High-flying dunk'
+      title: 'Game Moments',
+      description: 'Where legends are born'
     },
     {
-      url: 'https://images.unsplash.com/photo-1517836429999-0837f0e3fc0c?w=800',
-      title: 'Team Huddle',
-      description: 'Planning the next move'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1555041468-22b81f2ec4b1?w=800',
-      title: 'Training Camp',
-      description: 'Building team chemistry'
+      title: 'Our Community',
+      description: 'More than just a team'
     }
   ];
 
   return (
-    <div className="gallery-page">
-      <Gallery images={galleryImages} />
+    <div className="gallery-page" style={{
+          backgroundColor: "white",
+          padding: "0",
+          margin: "0",
+          minHeight: "100vh",
+        }}>
+      <GalleryNavbar />
+      <div className="gallery-content" style={{
+        padding: "0",
+        margin: "0"
+      }}>
+        <h1 style={{
+          color: "#ffb07c",
+          marginBottom: "0.5rem",
+          fontSize: "2.5rem",
+          textTransform: "uppercase",
+          letterSpacing: "2px",
+          textAlign: "center",
+          fontWeight: "700",
+        }}>Gallery</h1>
+        <Gallery />
+      </div>
     </div>
   );
 };

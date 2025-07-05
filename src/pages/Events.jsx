@@ -3,7 +3,7 @@ import '../styles/Events.css';
 import EventsNavbar from '../components/EventsNavbar';
 
 const Events = () => {
-  const events = [
+  const futureEvents = [
     {
       title: 'Young Talents Basketball Tournament 2025',
       date: 'September 10, 2025',
@@ -60,16 +60,51 @@ const Events = () => {
       description: 'Subscribe to our newsletter to stay updated on future events and exclusive opportunities!',
       image: 'https://pbs.twimg.com/media/ER5XpD3WoAAfiN3.jpg',
       button: {
-        text: 'Join Event',
+        text: 'Join Our Newsletter',
         href: '#',
         color: 'blue'
       }
-    },
+    }
+  ];
+
+  const pastEvents = [
     {
       title: 'Basketball Camp 2025 – Train Like a Pro!',
       date: 'July 15-21, 2025',
       description: 'A week full of drills, games, and teamwork to take your basketball to the next level.',
       image: 'https://cdn.nba.com/teams/uploads/sites/1610612749/2022/05/EO1Y0RVX4AEO-EK.jpg',
+      button: {
+        text: 'View Details',
+        href: '#',
+        color: 'blue'
+      }
+    },
+    {
+      title: 'Autograph Session with Basketball Legends',
+      date: 'July 2, 2025',
+      description: 'A memorable moment with the Legends — autographs, smiles, and inspiration.',
+      image: 'https://cdn.nba.com/teams/legacy/www.nba.com/suns/sites/suns/files/legacy/photos/autograph11_0.jpg',
+      button: {
+        text: 'View Details',
+        color: 'blue'
+      }
+    },
+    {
+      title: 'Open Tryouts – Show Us What You\'ve Got!',
+      date: 'June 28, 2025',
+      description: 'Join us on the court and prove your skills — your journey to the team starts here.',
+      image: 'https://www.onpointbasketball.com/wp-content/uploads/2019/09/IMG-20190907-WA0013.jpg',
+      button: {
+        text: 'View Details',
+        href: '#',
+        color: 'blue'
+      }
+    },
+    {
+      title: 'Meet the Team',
+      date: 'June 16, 2025',
+      description: 'The minds and mentors guiding our club on and off the court.',
+      image: 'https://images.gametime.co/sport/other/gametime-images/otherunrivaled/hero@4x/unrivaled-basketball-league.jpg?auto=webp&format=pjpg&disable=upscale&dpr=2&fit=crop&width=440&quality=50%2C35&height=200',
       button: {
         text: 'View Details',
         href: '#',
@@ -85,7 +120,7 @@ const Events = () => {
       <div className="events-container">
         <h2 className="future-events-title">Future Events</h2>
         <div className="events-row">
-          {events.slice(0, 3).map((event, index) => (
+          {futureEvents.slice(0, 3).map((event, index) => (
             <div key={index} className={`event-card ${event.button?.color === 'blue' ? 'blue' : 'orange'}`}>
               <div className="event-image-container">
                 <img src={event.image} alt={event.title} className="event-image" />
@@ -102,7 +137,7 @@ const Events = () => {
           ))}
         </div>
         <div className="events-row">
-          {events.slice(3, 6).map((event, index) => (
+          {futureEvents.slice(3, 6).map((event, index) => (
             <div key={index + 3} className={`event-card ${event.button?.color === 'blue' ? 'blue' : 'orange'}`}>
               <div className="event-image-container">
                 <img src={event.image} alt={event.title} className="event-image" />
@@ -118,8 +153,23 @@ const Events = () => {
             </div>
           ))}
         </div>
-        <div className="past-events-title" style={{ gridColumn: '1' }}>
-          Past Events
+        <h2 className="past-events-title">Past Events</h2>
+        <div className="events-row">
+          {pastEvents.map((event, index) => (
+            <div key={index} className={`event-card ${event.button?.color === 'blue' ? 'blue' : 'orange'}`}>
+              <div className="event-image-container">
+                <img src={event.image} alt={event.title} className="event-image" />
+              </div>
+              <div className="event-content">
+                <h2 className="event-title">{event.title}</h2>
+                <p className="event-date">{event.date}</p>
+                <p className="event-description">{event.description}</p>
+                <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
+                  {event.button?.text}
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

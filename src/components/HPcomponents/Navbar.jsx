@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
@@ -40,27 +43,37 @@ const Navbar = () => {
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        <Link to="/account" 
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(124, 176, 255, 0.3)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-          }}
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            transition: 'all 0.3s ease'
-          }}>
-          My Account
-        </Link>
-        
-        <div style={{
-          display: 'flex',
-          gap: '1.5rem'
-        }}>
+        {user ? (
+          <button
+            onClick={async () => {
+              try {
+                await logout();
+                navigate('/login');
+              } catch (error) {
+                console.error('Logout error:', error);
+              }
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+              e.currentTarget.style.color = '#7cb0ff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+              e.currentTarget.style.color = 'white';
+            }}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer'
+            }}>
+            Sign Out
+          </button>
+        ) : (
           <Link to="/login"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
@@ -73,38 +86,18 @@ const Navbar = () => {
             style={{
               color: 'white',
               textDecoration: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              fontSize: '1rem',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease'
             }}>
             Sign In
           </Link>
-          <Link to="/subscriptions"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              fontSize: '1rem',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-            Plans
-          </Link>
+        )}
+        
+        <div style={{
+          display: 'flex',
+          gap: '0.5rem'
+        }}>
           <Link to="/gallery"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
@@ -127,6 +120,28 @@ const Navbar = () => {
             }}>
             Gallery
           </Link>
+          <Link to="/plans"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+              e.currentTarget.style.color = '#7cb0ff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+              e.currentTarget.style.color = 'white';
+            }}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              fontSize: '1rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+            Plans
+          </Link>
           <Link to="/events"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
@@ -148,6 +163,28 @@ const Navbar = () => {
               boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
             }}>
             Events
+          </Link>
+          <Link to="/account"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+              e.currentTarget.style.color = '#7cb0ff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+              e.currentTarget.style.color = 'white';
+            }}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              fontSize: '1rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+            Sign In
           </Link>
         </div>
       </div>
