@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
+import { useEffect, useState } from "react";
 function AccountPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -15,7 +15,7 @@ function AccountPage() {
         email: user.email,
         role: user.role || "Member",
         membership: "Active",
-        joinDate: new Date(user.created || Date.now()).toLocaleDateString()
+        joinDate: new Date(user.created || Date.now()).toLocaleDateString(),
       };
       setUserData(userData);
       setLoading(false);
@@ -43,10 +43,10 @@ function AccountPage() {
             <h2>Welcome Back</h2>
             <p>Please sign in to access your account</p>
           </div>
-          <button 
-            onClick={() => navigate('/login')}
+          <button
+            onClick={() => navigate("/login")}
             className="login-button"
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           >
             <span>Sign In to Your Account</span>
           </button>
@@ -62,31 +62,31 @@ function AccountPage() {
           <h1>My Account</h1>
           <p>Your basketball club membership details</p>
         </div>
-        
+
         <div className="profile-section">
           <div className="profile-avatar">
             <span>{userData.name[0].toUpperCase()}</span>
           </div>
-          
+
           <div className="profile-info">
             <div className="info-item">
               <div className="info-icon">👤</div>
               <span className="info-label">Name:</span>
               <span className="info-value">{userData.name}</span>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">📧</div>
               <span className="info-label">Email:</span>
               <span className="info-value">{userData.email}</span>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">📅</div>
               <span className="info-label">Joined:</span>
               <span className="info-value">{userData.joinDate}</span>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">✅</div>
               <span className="info-label">Membership Status:</span>
@@ -98,13 +98,8 @@ function AccountPage() {
         <div className="profile-section actions-section">
           <h3>Account Actions</h3>
           <div className="action-buttons">
-            <button className="action-button edit-btn">
-              📝 Edit Profile
-            </button>
-            <button 
-              onClick={logout} 
-              className="action-button logout-btn"
-            >
+            <button className="action-button edit-btn">📝 Edit Profile</button>
+            <button onClick={logout} className="action-button logout-btn">
               ❌ Logout
             </button>
           </div>
