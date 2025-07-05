@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AnimatedWaveBackground from "../components/AnimatedWaveBackground";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -77,8 +78,10 @@ const RegisterPage = () => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      background: "linear-gradient(120deg, #7cb0ff 0%, #ffb07c 100%)"
+      position: "relative",
+      overflow: "hidden"
     }}>
+      <AnimatedWaveBackground />
       <div className="login-box">
           <Link to="/" className="home-button">← Back to Home</Link>
           <div className="login-header">
