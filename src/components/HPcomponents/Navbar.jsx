@@ -43,56 +43,29 @@ const Navbar = () => {
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        {user ? (
-          <button
-            onClick={async () => {
-              try {
-                await logout();
-                navigate('/login');
-              } catch (error) {
-                console.error('Logout error:', error);
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              transition: 'all 0.3s ease',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer'
-            }}>
-            Sign Out
-          </button>
-        ) : (
-          <Link to="/login"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              transition: 'all 0.3s ease'
-            }}>
-            Sign In
-          </Link>
-        )}
+        <button
+          onClick={() => user ? navigate('/account') : navigate('/redirection') }
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
+            e.currentTarget.style.color = '#7cb0ff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            e.currentTarget.style.color = 'white';
+          }}
+          style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            transition: 'all 0.3s ease',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          {user ? (user.displayName || user.email) : 'My Account'}
+        </button>
         
         <div style={{
           display: 'flex',
@@ -164,28 +137,7 @@ const Navbar = () => {
             }}>
             Events
           </Link>
-          <Link to="/account"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              fontSize: '1rem',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-            Sign In
-          </Link>
+
         </div>
       </div>
     </nav>

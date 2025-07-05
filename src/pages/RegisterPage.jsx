@@ -70,85 +70,93 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="login-container">
+    <div style={{
+      minHeight: "100vh",
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "linear-gradient(120deg, #7cb0ff 0%, #ffb07c 100%)"
+    }}>
       <div className="login-box">
-        <Link to="/" className="home-button">← Back to Home</Link>
-        <div className="login-header">
-          <h2>Create Account</h2>
-          <p>Sign up to start your basketball journey</p>
+          <Link to="/" className="home-button">← Back to Home</Link>
+          <div className="login-header">
+            <h2>Create Account</h2>
+            <p>Sign up to start your basketball journey</p>
+          </div>
+          <form className="login-form" autoComplete="on" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Enter your full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autoComplete="username"
+                required
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autoComplete="new-password"
+                required
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="confirm-password">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                name="confirm-password"
+                required
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "Creating Account..." : "Sign Up"}
+            </button>
+            {error && <p className="error-message">{error}</p>}
+          </form>
+          <div className="auth-options">
+            <div className="separator">
+              <span>or</span>
+            </div>
+            <button className="social-login" onClick={handleGoogleSignIn} disabled={loading}>
+              {loading ? "Signing In..." : <>
+                <FontAwesomeIcon icon={faGoogle} />
+                Continue with Google
+              </>}
+            </button>
+          </div>
+          <p className="signup-text">
+            Already have an account? <Link to="/login">Sign In</Link>
+          </p>
         </div>
-        <form className="login-form" autoComplete="on" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              placeholder="Enter your full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              autoComplete="username"
-              required
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              autoComplete="new-password"
-              required
-              placeholder="Create a password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <input
-              type="password"
-              id="confirm-password"
-              name="confirm-password"
-              required
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="login-button" disabled={loading}>
-            {loading ? "Creating Account..." : "Sign Up"}
-          </button>
-          {error && <p className="error-message">{error}</p>}
-        </form>
-        <div className="auth-options">
-          <div className="separator">
-            <span>or</span>
-          </div>
-          <button className="social-login" onClick={handleGoogleSignIn} disabled={loading}>
-            {loading ? "Signing In..." : <>
-              <FontAwesomeIcon icon={faGoogle} />
-              Continue with Google
-            </>}
-          </button>
-        </div>
-        <p className="signup-text">
-          Already have an account? <Link to="/login">Sign In</Link>
-        </p>
       </div>
-    </div>
   );
 };
 

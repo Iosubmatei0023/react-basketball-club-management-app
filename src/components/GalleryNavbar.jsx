@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const GalleryNavbar = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   return (
     <nav style={{
       position: 'fixed',
@@ -21,7 +24,8 @@ const GalleryNavbar = () => {
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        <Link to="/account"
+        <button
+          onClick={() => user ? navigate('/account') : navigate('/redirection') }
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
             e.currentTarget.style.color = '#7cb0ff';
@@ -35,10 +39,16 @@ const GalleryNavbar = () => {
             textDecoration: 'none',
             fontSize: '1.2rem',
             fontWeight: 'bold',
-            transition: 'all 0.3s ease'
-          }}>
-          My Account
-        </Link>
+            transition: 'all 0.3s ease',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            outline: 'none',
+            padding: 0
+          }}
+        >
+          {user ? (user.displayName || user.email) : 'My Account'}
+        </button>
         
         <div style={{
           display: 'flex',
