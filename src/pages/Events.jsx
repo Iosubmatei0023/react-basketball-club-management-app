@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/Events.css';
 import EventsNavbar from '../components/EventsNavbar';
+import Popout from '../components/Popout';
+import NewsletterPopout from '../components/NewsletterPopout';
+import DetailsPopout from '../components/DetailsPopout';
 
 const Events = () => {
   const futureEvents = [
@@ -115,9 +118,26 @@ const Events = () => {
 
 
 
+  // Popout state
+  const [popoutOpen, setPopoutOpen] = useState(false);
+  const [popoutMessage, setPopoutMessage] = useState('');
+  const [newsletterPopoutOpen, setNewsletterPopoutOpen] = useState(false);
+  // Details popout state
+  const [detailsPopoutOpen, setDetailsPopoutOpen] = useState(false);
+  const [detailsPopoutTitle, setDetailsPopoutTitle] = useState('');
+  const [detailsPopoutDetails, setDetailsPopoutDetails] = useState('');
+
+  // Handler for Join Event
+  const handleJoinEvent = (event) => {
+    setPopoutMessage(`Congratulations! You joined this event on ${event.date}`);
+    setPopoutOpen(true);
+  };
+
   return (
     <div className="events-page">
-
+      <Popout open={popoutOpen} onClose={() => setPopoutOpen(false)} message={popoutMessage} />
+      <NewsletterPopout open={newsletterPopoutOpen} onClose={() => setNewsletterPopoutOpen(false)} />
+      <DetailsPopout open={detailsPopoutOpen} onClose={() => setDetailsPopoutOpen(false)} title={detailsPopoutTitle} details={detailsPopoutDetails} />
       <EventsNavbar />
       <h1 className="events-title">Events</h1>
       <div className="events-container">
@@ -132,9 +152,25 @@ const Events = () => {
                 <h2 className="event-title">{event.title}</h2>
                 <p className="event-date">{event.date}</p>
                 <p className="event-description">{event.description}</p>
-                <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
-                  {event.button?.text}
-                </a>
+                {event.button?.color === 'orange' && event.button?.text === 'Join Event' ? (
+                  <button className={`event-button orange`} onClick={() => handleJoinEvent(event)}>
+                    {event.button?.text}
+                  </button>
+                ) : event.button?.text === 'Join Our Newsletter' ? (
+                  <button
+                    className={`event-button ${event.button?.color}`}
+                    onClick={() => {
+                      setPopoutMessage('Thank you for joining our newsletter.');
+                      setPopoutOpen(true);
+                    }}
+                  >
+                    {event.button?.text}
+                  </button>
+                ) : (
+                  <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
+                    {event.button?.text}
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -149,9 +185,25 @@ const Events = () => {
                 <h2 className="event-title">{event.title}</h2>
                 <p className="event-date">{event.date}</p>
                 <p className="event-description">{event.description}</p>
-                <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
-                  {event.button?.text}
-                </a>
+                {event.button?.color === 'orange' && event.button?.text === 'Join Event' ? (
+                  <button className={`event-button orange`} onClick={() => handleJoinEvent(event)}>
+                    {event.button?.text}
+                  </button>
+                ) : event.button?.text === 'Join Our Newsletter' ? (
+                  <button
+                    className={`event-button ${event.button?.color}`}
+                    onClick={() => {
+                      setPopoutMessage('Thank you for joining our newsletter.');
+                      setPopoutOpen(true);
+                    }}
+                  >
+                    {event.button?.text}
+                  </button>
+                ) : (
+                  <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
+                    {event.button?.text}
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -167,9 +219,32 @@ const Events = () => {
                 <h2 className="event-title">{event.title}</h2>
                 <p className="event-date">{event.date}</p>
                 <p className="event-description">{event.description}</p>
-                <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
-                  {event.button?.text}
-                </a>
+                {event.button?.text === 'View Details' ? (
+                  <button
+                    className={`event-button ${event.button?.color}`}
+                    onClick={() => {
+                      let details = '';
+                      if (index === 0) {
+                        details = `Throughout the week, participants engaged in a dynamic program that combined skill-building drills, tactical coaching, and competitive gameplay. Each day featured focused sessions on shooting, defense, ball-handling, agility, and game IQ — all led by experienced coaches and special guest mentors. In addition to the on-court work, players participated in team-building exercises and basketball workshops covering topics like nutrition, injury prevention, and mental preparation.`;
+                      } else if (index === 1) {
+                        details = `A memorable moment where basketball fans met their heroes up close — an unforgettable day filled with autographs, smiles, and stories from the court.\n\nAttendees of all ages had the rare opportunity to interact with legendary players, capture photos, and walk away with signed memorabilia and priceless memories. The atmosphere was electric, blending nostalgia, inspiration, and excitement for the next generation of athletes.`;
+                      } else if (index === 2) {
+                        details = `The Open Tryouts proved to be an exciting and high-energy day filled with skill, determination, and ambition. Athletes of all ages and backgrounds participated in a series of drills, scrimmages, and evaluations, all under the eyes of our coaching staff. From sharp shooting to smart plays and hustle defense, each player had the chance to showcase their strengths and prove they belonged.`;
+                      } else if (index === 3) {
+                        details = `During this special event, club members, supporters, and fans had the opportunity to meet the leadership behind the scenes: our coaches, staff, and management team. Guests heard firsthand about the club’s vision, training philosophy, and plans for the future.\n\nFrom insightful talks to casual meet-and-greet moments, the event offered a rare chance to connect with the people who shape the club’s culture and success. Attendees asked questions, shared feedback, and left feeling more connected than ever to the mission of the club.`;
+                      }
+                      setDetailsPopoutTitle(event.title);
+                      setDetailsPopoutDetails(details);
+                      setDetailsPopoutOpen(true);
+                    }}
+                  >
+                    {event.button?.text}
+                  </button>
+                ) : (
+                  <a href={event.button?.href} className={`event-button ${event.button?.color}`}>
+                    {event.button?.text}
+                  </a>
+                )}
               </div>
             </div>
           ))}

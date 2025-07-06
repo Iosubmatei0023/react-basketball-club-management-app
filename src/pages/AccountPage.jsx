@@ -116,11 +116,11 @@ function AccountPage() {
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Joined:</span>
-            <span style={{ color: '#333' }}>{userData.joinDate}</span>
+            <span style={{ color: '#333', marginLeft: 10 }}>{userData.joinDate}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Membership Status:</span>
-            <span style={{ color: userData.plan ? '#7cb0ff' : '#e67e22', fontWeight: 600 }}>
+            <span style={{ color: userData.plan ? '#7cb0ff' : '#e67e22', fontWeight: 600, marginLeft: 10 }}>
               {userData.plan ? userData.plan : 'No membership acquired'}
             </span>
           </div>
@@ -180,27 +180,71 @@ function AccountPage() {
             ) : (
               <div style={{
                 color: '#333',
-                marginLeft: 24,
-                display: 'block',
+                marginLeft: 0,
+                display: 'flex',
+                flexDirection: 'column',
                 minWidth: 220,
-                padding: '10px 14px',
+                padding: '10px 16px 10px 16px',
                 background: '#f8f9fa',
                 borderRadius: 6,
                 fontSize: 16,
                 boxShadow: '0 1px 6px rgba(124,176,255,0.08)',
                 letterSpacing: 0.1,
                 wordBreak: 'break-word',
-                lineHeight: 1.7
+                lineHeight: 1.7,
+                border: '2px solid #ffb07c',
+                paddingLeft: 16
               }}>
                 {selectedAttendedEvents.length > 0
-                  ? selectedAttendedEvents.map(ev => (
-                      <div key={ev} style={{ padding: '2px 0', borderBottom: '1px solid #e6eaf2', marginBottom: 2, fontWeight: 500 }}>
+                  ? selectedAttendedEvents.map((ev, idx) => (
+                      <div
+                        key={ev}
+                        style={{
+                          padding: '2px 0',
+                          borderBottom: idx !== selectedAttendedEvents.length - 1 ? '1px solid #e6eaf2' : 'none',
+                          marginBottom: 2,
+                          fontWeight: 500,
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <span style={{
+                          display: 'inline-block',
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          background: '#ffb07c',
+                          marginRight: 10,
+                          marginLeft: 0
+                        }}></span>
                         {ev}
                       </div>
                     ))
                   : 'Not set'}
               </div>
             )}
+          </div>
+
+          {/* Scheduled Events Section */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 32 }}>
+            <span style={{ fontWeight: 600, color: '#444', width: 120, marginTop: 6 }}>Scheduled Events:</span>
+            <div style={{
+              color: '#333',
+              marginLeft: 10,
+              display: 'flex',
+              alignItems: 'center',
+              minWidth: 220,
+              padding: '10px 0 10px 0',
+              background: '#f8f9fa',
+              borderRadius: 6,
+              fontSize: 16,
+              boxShadow: '0 1px 6px rgba(124,176,255,0.08)',
+              letterSpacing: 0.1,
+              wordBreak: 'break-word',
+              lineHeight: 1.7
+            }}>
+              No scheduled events.
+            </div>
           </div>
         </div>
 
@@ -276,7 +320,6 @@ function AccountPage() {
             Logout
           </button>
         </div>
-
         <Link to="/" style={{
           display: 'block',
           textAlign: 'center',
@@ -288,8 +331,6 @@ function AccountPage() {
         }}>
           Back to Home
         </Link>
-
-
       </div>
     </div>
   );
