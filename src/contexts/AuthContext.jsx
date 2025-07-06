@@ -17,24 +17,34 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const docRef = doc(db, 'users', firebaseUser.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setUser({ ...firebaseUser, ...docSnap.data() });
+          } else {
+            setUser({ ...firebaseUser, role: 'member' });
+          }
+        } catch (err) {
+          setUser({ ...firebaseUser, role: 'member' });
+        }
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
   const login = async (email, password) => {
     try {
-      setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      
       // Get user data from Firestore
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
-      
       if (docSnap.exists()) {
         setUser({ ...user, ...docSnap.data() });
       } else {
@@ -47,40 +57,14 @@ export function AuthProvider({ children }) {
         });
         setUser({ ...user, role: 'member' });
       }
-      
-      setLoading(false);
       return user;
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
 
-  // Add effect to handle auth state changes
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Get user data from Firestore
-        const docRef = doc(db, 'users', user.uid);
-        getDoc(docRef).then(docSnap => {
-          if (docSnap.exists()) {
-            setUser({ ...user, ...docSnap.data() });
-          } else {
-            setUser({ ...user, role: 'member' });
-          }
-        });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
   const register = async (email, password, name) => {
     try {
-      setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       
@@ -99,22 +83,17 @@ export function AuthProvider({ children }) {
       });
       
       setUser({ ...user, name, email, role: 'member' });
-      setLoading(false);
       return user;
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
 
   const logout = async () => {
     try {
-      setLoading(true);
       await signOut(auth);
       setUser(null);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };

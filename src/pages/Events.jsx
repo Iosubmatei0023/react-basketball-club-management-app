@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Events.css';
 import EventsNavbar from '../components/EventsNavbar';
 
@@ -113,8 +113,11 @@ const Events = () => {
     }
   ];
 
+
+
   return (
     <div className="events-page">
+
       <EventsNavbar />
       <h1 className="events-title">Events</h1>
       <div className="events-container">

@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register, signInWithGoogle } = useAuth();
+  const { user, register, login, signInWithGoogle } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +15,18 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Redirect to account page if already logged in
+  React.useEffect(() => {
+    if (user) {
+      navigate("/account");
+    }
+  }, [user, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+    console.log('[Register] Submitting with:', { email, password, name });
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -28,18 +36,21 @@ const RegisterPage = () => {
 
     try {
       const user = await register(email, password, name);
-      
-      // Get user data from Firebase
-      const userData = {
-        name: user.displayName,
-        email: user.email,
-        role: "Member",
-        membership: "Active",
-        joinDate: new Date().toLocaleDateString()
-      };
-      
-      navigate("/account");
+      console.log('[Register] Registration successful:', user);
+
+      // Automatically log in the user after registration
+      try {
+        console.log('[Register] Attempting auto-login...');
+        const loginResult = await login(email, password);
+        console.log('[Register] Auto-login successful:', loginResult);
+        // navigation handled by useEffect when user is set
+        // navigate("/account");
+      } catch (loginErr) {
+        console.error('[Register] Auto-login failed:', loginErr);
+        setError("Registration succeeded, but automatic login failed: " + loginErr.message);
+      }
     } catch (err) {
+      console.error('[Register] Registration failed:', err);
       setError(err.message);
     } finally {
       setLoading(false);
