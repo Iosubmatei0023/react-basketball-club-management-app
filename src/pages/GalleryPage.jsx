@@ -8,22 +8,6 @@ const GalleryPage = () => {
     {
       title: 'Our Arena',
       description: 'The home of our basketball dreams'
-    },
-    {
-      title: 'Our Equipment',
-      description: 'Professional-grade gear and technology'
-    },
-    {
-      title: 'Training Moments',
-      description: 'Where champions are made'
-    },
-    {
-      title: 'Game Moments',
-      description: 'Where legends are born'
-    },
-    {
-      title: 'Our Community',
-      description: 'More than just a team'
     }
   ];
 
@@ -39,16 +23,18 @@ const GalleryPage = () => {
         padding: "0",
         margin: "0"
       }}>
+        
         <h1 style={{
-          color: "#ffb07c",
-          marginBottom: "0.5rem",
-          fontSize: "2.5rem",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          textAlign: "center",
-          fontWeight: "700",
-        }}>Gallery</h1>
-        <Gallery />
+  color: "#ffb07c",
+  marginTop: "5.5rem", // Adjust this value if your navbar is taller/shorter
+  marginBottom: "2.5rem",
+  fontSize: "2.5rem",
+  textTransform: "uppercase",
+  letterSpacing: "2px",
+  textAlign: "center",
+  fontWeight: "700"
+}}>Gallery</h1>
+<Gallery />
       </div>
     </div>
   );

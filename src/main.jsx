@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RouteChangeLoader from "./components/RouteChangeLoader";
+import PageTransition from "./components/PageTransition.jsx";
 import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
 import SubscriptionsPage from "./pages/SubscriptionsPage";
@@ -20,8 +22,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
       <AuthProvider>
-        <div>
-          <Routes>
+        <RouteChangeLoader>
+          <PageTransition>
+            <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/subscriptions" element={<SubscriptionsPage />} />
@@ -34,7 +37,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/login-required" element={<LoginRequired />} />
             <Route path="/redirection" element={<RedirectionPage />} />
           </Routes>
-        </div>
+        </PageTransition>
+        </RouteChangeLoader>
       </AuthProvider>
     </Router>
   </StrictMode>

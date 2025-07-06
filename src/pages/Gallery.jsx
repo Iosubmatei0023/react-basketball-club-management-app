@@ -49,7 +49,7 @@ const lightboxContentStyles = {
 };
 
 const containerStyles = {
-  padding: "4rem 2rem",
+  padding: "9rem 2rem 4rem 2rem", // Moved content further down
   maxWidth: "1200px",
   margin: "0 auto",
   backgroundColor: "white",
@@ -57,6 +57,7 @@ const containerStyles = {
 
 const titleStyles = {
   color: "#ffb07c",
+  marginTop: "7rem",
   marginBottom: "0.5rem",
   fontSize: "2.5rem",
   textTransform: "uppercase",
@@ -178,59 +179,8 @@ const categories = [
     ],
   },
   {
-    title: "Team Photos",
-    photos: [
-      {
-        url: "https://cdn.prod.website-files.com/645c37312e4131ceca6d3887/68588e7a2c57abb8e75838b4_Highflyerimages-4949.jpg",
-        title: "Team Practice",
-        description: "Intense practice session focusing on team coordination and drills",
-      },
-      {
-        url: "https://sydneybasketball.com.au/wp-content/uploads/2025/06/newslider_2.jpeg",
-        title: "Game Day",
-        description: "Exciting match against rival team with passionate fans",
-      },
-      {
-        url: "https://media.licdn.com/dms/image/v2/C4E1BAQH3ixpZsmulxw/company-background_10000/company-background_10000/0/1642497977252/sevenoaks_suns_basketball_club_cover?e=2147483647&v=beta&t=-xc3PU6sZhLzL23yg91aTLtXiynA2_zeyAqXJXLj1_M",
-        title: "Team Celebration",
-        description: "Post-game celebration with the championship trophy",
-      },
-    ],
-  },
-  {
-    title: "Training",
-    photos: [
-      {
-        url: "https://miro.medium.com/v2/resize:fit:1012/1*yxcHFgE13kXcyUa74tErOQ.jpeg",
-        title: "Training Session",
-        description: "Focused training with professional coach",
-      },
-      {
-        url: "https://images.squarespace-cdn.com/content/v1/618e7535fd4f8e175cb825c3/333fc155-2291-40f3-ae83-83332776b439/plymouth+basketball+club-under+16s_-91.jpg",
-        title: "Youth Development",
-        description: "Young players learning fundamental skills",
-      },
-    ],
-  },
-  {
-    title: "Game Action",
-    photos: [
-      {
-        url: "https://i.pinimg.com/736x/3a/e3/2d/3ae32d7a1c5ea4c51fff03250b1b8098.jpg",
-        title: "Team Huddle",
-        description: "Pre-game strategy discussion",
-      },
-      {
-        url: "https://static.wixstatic.com/media/8e3023_c1ed6503d99c40dcbb5f16f271709d50~mv2.jpg/v1/fill/w_640,h_486,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/8e3023_c1ed6503d99c40dcbb5f16f271709d50~mv2.jpg",
-        title: "Game Action",
-        description: "Intense in-game action",
-      },
-      {
-        url: "https://ucclermont.edu/athletics/mensbasketball/_jcr_content/main/image.img.jpeg/1730215588801/2024-mens-basketball-team.jpeg",
-        title: "Team Lineup",
-        description: "Official team photo with all players",
-      },
-    ],
+    title: "Our Equipment",
+    photos: [], // Add equipment photos here
   },
 ];
 
@@ -262,25 +212,26 @@ const Gallery = () => {
 
   return (
     <div style={containerStyles}>
+      
       {categories.map((category, categoryIndex) => (
-        <div key={categoryIndex}>
-          {category.title && (
+        <div key={categoryIndex} style={categoryIndex === 1 ? { marginTop: "2.5rem" } : {}} >
+          {category.title && category.title !== 'Gallery' && (
             <h2 style={{
-              color: "#ffb07c",
-              marginBottom: "1.5rem",
-              fontSize: "1.8rem",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              textAlign: "left",
-              fontWeight: "600",
-              position: "relative",
-              display: "block",
-              width: "100%",
-              paddingLeft: "1.5rem",
-            }}>{category.title}</h2>
+  color: "#ffb07c",
+  marginBottom: categoryIndex === 0 ? "2.5rem" : "1.5rem",
+  fontSize: "1.8rem",
+  textTransform: "uppercase",
+  letterSpacing: "1px",
+  textAlign: "left",
+  fontWeight: "600",
+  position: "relative",
+  display: "block",
+  width: "100%",
+  paddingLeft: "1.5rem",
+}}>{category.title}</h2>
           )}
           {categoryIndex === 0 ? (
-            <div style={slideshowStyles}>
+            <div style={{ ...slideshowStyles, marginBottom: "3.5rem" }}>
               <button style={arrowLeftStyles} onClick={handlePrev}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M15 6L9 12L15 18" />

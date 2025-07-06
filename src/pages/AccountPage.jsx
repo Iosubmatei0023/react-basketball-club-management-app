@@ -2,10 +2,13 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
+import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
+import AnimatedWaveBackground from "../components/AnimatedWaveBackground";
 function AccountPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [userData, setUserData] = useState(null);
+  const [selectedAttendedEvents, setSelectedAttendedEvents] = useState([]);
 
   // Redirect to login if user logs out
   useEffect(() => {
@@ -79,9 +82,10 @@ function AccountPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(120deg, #7cb0ff 0%, #ffb07c 100%)', padding: '40px 0', fontFamily: 'Segoe UI, Arial, sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(120deg, #7cb0ff 0%, #ffb07c 100%)', padding: '40px 0', fontFamily: 'Segoe UI, Arial, sans-serif', position: 'relative', overflow: 'hidden' }}>
+      <AnimatedWaveBackground />
       <div style={{
-        maxWidth: 500,
+        maxWidth: 600,
         margin: '0 auto',
         background: 'white',
         borderRadius: 20,
@@ -157,6 +161,45 @@ function AccountPage() {
               />
             ) : (
               <span style={{ color: '#333', marginLeft: 10 }}>{hometown || 'Not set'}</span>
+            )}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 32 }}>
+            <span style={{ fontWeight: 600, color: '#444', width: 120, marginTop: 6 }}>Attended Events:</span>
+            {editMode ? (
+              <MultiSelectCheckbox
+                options={[
+                  'Basketball Camp 2025 – Train Like a Pro!',
+                  'Autograph Session with Basketball Legends',
+                  "Open Tryouts – Show Us What You've Got!",
+                  'Meet the Team'
+                  // Add more here as new past events are added in Events.jsx
+                ]}
+                selected={selectedAttendedEvents}
+                setSelected={setSelectedAttendedEvents}
+              />
+            ) : (
+              <div style={{
+                color: '#333',
+                marginLeft: 24,
+                display: 'block',
+                minWidth: 220,
+                padding: '10px 14px',
+                background: '#f8f9fa',
+                borderRadius: 6,
+                fontSize: 16,
+                boxShadow: '0 1px 6px rgba(124,176,255,0.08)',
+                letterSpacing: 0.1,
+                wordBreak: 'break-word',
+                lineHeight: 1.7
+              }}>
+                {selectedAttendedEvents.length > 0
+                  ? selectedAttendedEvents.map(ev => (
+                      <div key={ev} style={{ padding: '2px 0', borderBottom: '1px solid #e6eaf2', marginBottom: 2, fontWeight: 500 }}>
+                        {ev}
+                      </div>
+                    ))
+                  : 'Not set'}
+              </div>
             )}
           </div>
         </div>
@@ -245,6 +288,8 @@ function AccountPage() {
         }}>
           Back to Home
         </Link>
+
+
       </div>
     </div>
   );
