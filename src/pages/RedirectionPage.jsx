@@ -7,18 +7,20 @@ const RedirectionPage = () => {
   return (
     <div style={{
       minHeight: "100vh",
+      margin: 0,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       position: "relative",
-      overflow: "hidden",
-      fontFamily: 'Segoe UI, Arial, sans-serif'
+      overflow: "hidden"
     }}>
       <AnimatedWaveBackground />
-      <div className="login-box" style={{ textAlign: "center" }}>
-        <h2 style={{ color: "#ff7c7c", marginBottom: 16 }}>Oops...</h2>
-        <p style={{ marginBottom: 32, color: "#333", fontSize: 18 }}>
+      <div className="login-box">
+        <div className="login-header">
+          <h2 style={{ color: "#ff7c7c", marginBottom: 16 }}>Oops...</h2>
+        </div>
+        <p style={{ marginBottom: 32, color: "#333", fontSize: 18, textAlign: "center" }}>
           You are not signed in.<br />
           Please sign in to access your account.
         </p>

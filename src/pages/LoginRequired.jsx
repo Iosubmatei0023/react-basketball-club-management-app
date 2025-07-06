@@ -1,26 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AnimatedWaveBackground from "../components/AnimatedWaveBackground";
 
 export default function LoginRequired() {
   const navigate = useNavigate();
   return (
     <div style={{
       minHeight: '100vh',
+      margin: 0,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(120deg, #7cb0ff 0%, #ffb07c 100%)',
+      position: 'relative',
+      overflow: 'hidden',
       fontFamily: 'Segoe UI, Arial, sans-serif'
     }}>
-      <div style={{
-        background: 'white',
-        borderRadius: 18,
-        boxShadow: '0 6px 30px rgba(124,176,255,0.13)',
-        padding: '2.5rem 2rem',
-        maxWidth: 420,
-        textAlign: 'center'
-      }}>
+      <AnimatedWaveBackground />
+      <div className="login-box">
         <h1 style={{ color: '#7cb0ff', fontWeight: 700 }}>Login Required</h1>
         <p style={{ fontSize: 18, color: '#444', margin: '1.2rem 0 2rem' }}>
           You must be logged in to view this content.
