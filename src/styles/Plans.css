@@ -61,19 +61,266 @@
   padding: 2rem 1rem;
 }
 
-.plan-card {
-  background: white;
-  border-radius: 16px;
-  text-align: center;
-  transition: all 0.3s ease;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
+.plan-card.modern {
+  background: linear-gradient(120deg, rgba(124,176,255,0.13) 0%, rgba(255,176,124,0.10) 100%), rgba(255,255,255,0.88);
+  border-radius: 22px;
+  box-shadow: 0 4px 32px 0 rgba(124,176,255,0.14), 0 1.5px 6px rgba(255,176,124,0.09);
+  padding: 1.2rem 1.3rem 1.3rem 1.3rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  max-width: 350px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  transition: box-shadow 0.3s, transform 0.22s;
+  border: none;
+}
+
+.plan-card.modern:hover {
+  transform: translateY(-8px) scale(1.035);
+  box-shadow: 0 10px 40px 0 rgba(124,176,255,0.23), 0 2px 18px rgba(255,176,124,0.15);
+}
+
+.plan-card-icon-wrapper {
+  margin-top: -2.2rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  justify-content: center;
+}
+
+.plan-card-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px #7cb0ff55);
+}
+.plan-card-icon.basic { color: #7cb0ff; }
+.plan-card-icon.pro { color: #ffb07c; }
+.plan-card-icon.premium { color: #ffd700; }
+
+.modern-title {
+  font-size: 1.23rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #222;
+  margin-bottom: 0.18rem;
+  margin-top: 0;
+}
+
+.modern-price {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #4a6cf7;
+  margin-bottom: 0.42rem;
+}
+
+.modern-desc {
+  font-size: 0.99rem;
+  color: #333;
+  margin-bottom: 0.7rem;
+  margin-top: 0.2rem;
+}
+
+.modern-features {
+  width: 100%;
+  margin: 0.2rem 0 0.2rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modern-feature {
+  display: flex;
+  align-items: center;
+  font-size: 0.99rem;
+  color: #444;
+  padding: 0.36rem 0.5rem 0.36rem 0.2rem;
+  border-radius: 8px;
+  margin-bottom: 0.09rem;
+  transition: background 0.18s;
+}
+.modern-feature:nth-child(even) {
+  background: rgba(124,176,255,0.07);
+}
+.modern-feature:nth-child(odd) {
+  background: rgba(255,176,124,0.06);
+}
+
+.feature-icon.check {
+  color: #4a6cf7;
+  margin-right: 0.55rem;
+  font-size: 1.08rem;
+}
+
+.modern-btn {
+  margin-top: 1.1rem;
+  padding: 0.65rem 1.8rem;
+  border-radius: 999px;
+  font-size: 1.04rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #7cb0ff 0%, #ffb07c 100%);
+  box-shadow: 0 1.5px 12px rgba(124,176,255,0.13);
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.16s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.modern-btn:hover {
+  background: linear-gradient(90deg, #4a6cf7 0%, #ffb07c 100%);
+  box-shadow: 0 4px 18px rgba(124,176,255,0.19);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.billing-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.3rem 0 1.7rem 0;
+  gap: 1.2rem;
+}
+.billing-label {
+  font-size: 1.08rem;
+  color: #7cb0ff;
+  font-weight: 700;
+  opacity: 0.7;
+  transition: color 0.2s, opacity 0.2s;
+  cursor: pointer;
+}
+.billing-label.active {
+  color: #ffb07c;
+  opacity: 1;
+  text-shadow: 0 2px 8px #ffb07c33;
+}
+.billing-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+.billing-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.billing-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #7cb0ff 0%, #ffb07c 100%);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.billing-switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #7cb0ff44;
+  transition: transform 0.2s;
+}
+.billing-switch input:checked + .slider {
+  background: linear-gradient(90deg, #ffb07c 0%, #7cb0ff 100%);
+}
+.billing-switch input:checked + .slider:before {
+  transform: translateX(24px);
+}
+.save-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #7cb0ff 0%, #ffb07c 100%);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18em 0.8em;
+  margin-left: 0.7em;
+  box-shadow: 0 2px 8px #7cb0ff33;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 800px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 1.3rem;
+    padding: 1.2rem 0.4rem;
+  }
+  .plan-card.modern {
+    max-width: 98vw;
+    min-width: 0;
+    padding: 1.05rem 0.7rem 1.1rem 0.7rem;
+  }
+  .plan-card-icon {
+    font-size: 2.1rem;
+  }
+}
+
+.plan-top-row {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 2rem;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  gap: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
+.plan-title {
+  color: #333;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.plan-price {
+  color: #ffb07c;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.1rem;
+}
+
+.compact-desc {
+  color: #666;
+  font-size: 0.97rem;
+  line-height: 1.4;
+  margin: 0.5rem 0 0.7rem 0;
+  text-align: left;
+  max-width: 100%;
+}
+
+.compact-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 0.7rem;
+  margin: 0.4rem 0 0.1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact-feature {
+  font-size: 0.92rem;
+  margin-bottom: 0.2rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.plan-button {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.97rem;
+  border-radius: 6px;
+  margin: 0;
+  font-weight: 600;
+  min-width: 80px;
+  box-shadow: 0 1px 4px rgba(124,176,255,0.10);
 }
 
 .plan-description {
@@ -131,22 +378,28 @@
   align-items: center;
 }
 
-.plan-card.basic .plan-content {
-  margin-top: 4rem;
-  padding-top: 1rem;
+.plan-card.modern {
+  background: white;
+  border-radius: 14px;
+  text-align: left;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.2rem 1.3rem 1.1rem 1.3rem;
+  box-shadow: 0 2px 16px rgba(124,176,255,0.09);
+  min-width: 0;
 }
 
-.plan-card.pro .plan-content {
-  margin-top: 2rem;
-  padding-top: 1rem;
+.plan-card.modern:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(124, 176, 255, 0.4);
 }
 
-.plan-card.premium .plan-content {
-  margin-top: 0;
-  padding-top: 1rem;
-}
-
-.plan-title {
+.plan-title.modern {
   color: #333;
   font-weight: 700;
   text-transform: uppercase;
@@ -155,7 +408,7 @@
   letter-spacing: 1px;
 }
 
-.plan-price {
+.plan-price.modern {
   color: #ffb07c;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -163,7 +416,7 @@
   transition: color 0.3s ease;
 }
 
-.plan-description {
+.plan-description.modern {
   color: #666;
   font-size: 1rem;
   line-height: 1.6;
@@ -172,7 +425,7 @@
   max-width: 280px;
 }
 
-.plan-feature {
+.plan-feature.modern {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -180,28 +433,13 @@
   font-size: 0.95rem;
 }
 
-.plan-card.basic:hover .plan-title,
-.plan-card.basic:hover .plan-price {
-  color: #cd7f32; /* Bronze color */
-}
-
-.plan-card.pro:hover .plan-title,
-.plan-card.pro:hover .plan-price {
-  color: #c0c0c0; /* Silver color */
-}
-
-.plan-card.premium:hover .plan-title,
-.plan-card.premium:hover .plan-price {
-  color: #ffd700; /* Gold color */
-}
-
-.feature-icon {
+.feature-icon.modern {
   color: #ffb07c;
   margin-right: 0.5rem;
   font-size: 1rem;
 }
 
-.plan-button {
+.plan-button.modern {
   width: 100%;
   padding: 0.6rem;
   border: none;
@@ -216,13 +454,13 @@
   overflow: hidden;
 }
 
-.plan-button:hover {
+.plan-button.modern:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(124, 176, 255, 0.4);
   background: linear-gradient(145deg, #5c99ff 0%, #4a88ff 100%);
 }
 
-.plan-button::after {
+.plan-button.modern::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -238,6 +476,6 @@
   transition: transform 0.3s ease;
 }
 
-.plan-button:hover::after {
+.plan-button.modern:hover::after {
   transform: translate(-50%, -50%) scale(1);
 }

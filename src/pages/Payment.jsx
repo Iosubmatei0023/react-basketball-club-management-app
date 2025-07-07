@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faArrowLeft, faCheck, faCreditCard, faCalendarAlt, faUser, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import AnimatedWaveBackground from '../components/AnimatedWaveBackground';
 import '../styles/Payment.css';
 
 const Payment = () => {
+  const location = useLocation();
+  const billingPeriod = location.state?.billingPeriod || 'monthly';
   const { planId } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -34,8 +36,8 @@ const Payment = () => {
     {
       id: 'basic',
       name: 'Basic Plan',
-      price: 0.00,
-      period: 'month',
+      monthlyPrice: 'Free',
+      yearlyPrice: 'Free',
       description: 'Hobby Player\nPerfect for casual players who just want to enjoy the game.',
       features: [
         'Limited court access (1x/week)',
@@ -47,8 +49,8 @@ const Payment = () => {
     {
       id: 'pro',
       name: 'Pro Plan',
-      price: 15.00,
-      period: 'month',
+      monthlyPrice: '$15/month',
+      yearlyPrice: '$150/year', // Save $30 (17%)
       description: 'Junior Membership\nDesigned for kids and teens who want structured training and real team experience.',
       features: [
         'Weekly practice sessions with certified coaches',
@@ -60,8 +62,8 @@ const Payment = () => {
     {
       id: 'premium',
       name: 'Premium Plan',
-      price: 30.00,
-      period: 'month',
+      monthlyPrice: '$30/month',
+      yearlyPrice: '$300/year', // Save $60 (17%)
       description: 'Pro Membership\nFor dedicated athletes looking to train and compete at a higher level.',
       features: [
         'Unlimited access to training and court use',
@@ -82,7 +84,7 @@ const Payment = () => {
       return;
     }
     
-    setPlan(selectedPlan);
+    setPlan({ ...selectedPlan, displayPrice: billingPeriod === 'yearly' ? selectedPlan.yearlyPrice : selectedPlan.monthlyPrice });
     setIsLoading(false);
   }, [planId, navigate]);
   
@@ -367,7 +369,7 @@ const Payment = () => {
                     Processing...
                   </>
                 ) : (
-                  `Pay $${plan?.price?.toFixed(2) || '0.00'}`
+                  plan?.displayPrice ? `Pay ${plan.displayPrice}` : 'Pay'
                 )}
               </button>
               
@@ -380,15 +382,15 @@ const Payment = () => {
           
           <div className="order-summary">
             <h3>Order Summary</h3>
-            
             <div className="plan-details">
               <h4 className="plan-name">{plan?.name || 'Loading...'}</h4>
               <div className="plan-price">
-                ${plan?.price?.toFixed(2) || '0.00'}
-                <span>/{plan?.period || 'month'}</span>
+                {plan?.displayPrice}
+                {billingPeriod === 'yearly' && plan?.monthlyPrice !== 'Free' && (
+                  <span className="save-badge">Save 17%</span>
+                )}
               </div>
             </div>
-            
             <div className="plan-features">
               <h4>Plan includes:</h4>
               <ul>
@@ -405,7 +407,7 @@ const Payment = () => {
             
             <div className="total">
               <span>Total</span>
-              <span className="amount">${plan?.price?.toFixed(2) || '0.00'}</span>
+              <span className="amount">{plan?.displayPrice}</span>
             </div>
             
             <div className="payment-methods">
