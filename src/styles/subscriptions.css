@@ -1,7 +1,0 @@
-.subscribe-button {
-  transition: background-color 0.3s ease;
-}
-
-.subscribe-button:hover {
-  background-color: #ffb07c;
-}

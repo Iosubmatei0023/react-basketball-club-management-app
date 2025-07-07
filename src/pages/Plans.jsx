@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Plans.css';
 import EventsNavbar from '../components/EventsNavbar';
 
 const Plans = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Check for success state in location state
+    if (location.state?.paymentSuccess) {
+      setSuccessMessage(`Successfully subscribed to ${location.state.planName}!`);
+      setShowSuccess(true);
+      
+      // Clear the success message after 5 seconds
+      const timer = setTimeout(() => {
+        setShowSuccess(false);
+        // No navigate call here – just hide the popup
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, navigate, location.pathname]);
   const plans = [
     {
       title: 'Basic',
@@ -58,6 +81,12 @@ const Plans = () => {
   return (
     <div className="plans-page">
       <EventsNavbar />
+      {showSuccess && (
+        <div className="payment-success-message">
+          <FontAwesomeIcon icon={faCheckCircle} className="success-icon" />
+          {successMessage}
+        </div>
+      )}
       <div className="plans-container">
         <h1 className="plans-title">Choose Your Plan</h1>
         <div className="plans-grid">
@@ -78,9 +107,10 @@ const Plans = () => {
                 </ul>
               </div>
               <button
+                type="button"
                 className="plan-button"
                 style={{ backgroundColor: plan.button.color }}
-                onClick={() => window.location.href = plan.button.link}
+                onClick={() => { console.log('Navigating to', plan.button.link); navigate(plan.button.link); }}
               >
                 {plan.button.text}
               </button>

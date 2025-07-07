@@ -2,6 +2,39 @@
   min-height: 100vh;
   background-color: #ffffff;
   padding: 2rem 0;
+  position: relative;
+}
+
+.payment-success-message {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: slideDown 0.3s ease-out;
+}
+
+.payment-success-message .success-icon {
+  font-size: 1.2rem;
+}
+
+@keyframes slideDown {
+  from {
+    top: -100px;
+    opacity: 0;
+  }
+  to {
+    top: 80px;
+    opacity: 1;
+  }
 }
 
 .plans-container {
@@ -11,6 +44,7 @@
 }
 
 .plans-title {
+  margin-top: 2.5rem;
   color: #ffb07c;
   text-align: center;
   font-size: 2.5rem;

@@ -5,10 +5,9 @@ import RouteChangeLoader from "./components/RouteChangeLoader";
 import PageTransition from "./components/PageTransition.jsx";
 import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
-import SubscriptionsPage from "./pages/SubscriptionsPage";
 import LoginPage from "./pages/LoginPage";
-import PaymentPage from "./pages/PaymentPage";
 import RegisterPage from "./pages/RegisterPage";
+import Payment from "./pages/Payment";
 import Events from "./pages/Events";
 import GalleryPage from "./pages/GalleryPage";
 import Plans from "./pages/Plans";
@@ -27,10 +26,9 @@ createRoot(document.getElementById("root")).render(
             <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/subscriptions" element={<SubscriptionsPage />} />
-            <Route path="/payment/:planId" element={<PaymentPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/payment/:planId" element={<Payment />} />
             <Route path="/events" element={<RequireAuth><Events /></RequireAuth>} />
             <Route path="/gallery" element={<RequireAuth><GalleryPage /></RequireAuth>} />
             <Route path="/plans" element={<RequireAuth><Plans /></RequireAuth>} />

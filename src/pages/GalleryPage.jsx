@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/Gallery.css';
 import GalleryNavbar from '../components/GalleryNavbar';
 import ArenaCarousel from '../components/ArenaCarousel';
@@ -10,6 +10,46 @@ const GalleryPage = () => {
   const [hoveredArena, setHoveredArena] = useState(false);
   const [hoveredGame, setHoveredGame] = useState(false);
   const [hoveredTeam, setHoveredTeam] = useState(false);
+  
+  // Each carousel will rotate independently
+  // Each has its own interval and state
+  const [arenaIndex, setArenaIndex] = useState(0);
+  const [gameIndex, setGameIndex] = useState(0);
+  const [teamIndex, setTeamIndex] = useState(0);
+  
+  useEffect(() => {
+    // Arena carousel rotates every 9 seconds (3s * 3 carousels)
+    const arenaInterval = setInterval(() => {
+      setArenaIndex(prev => (prev + 1) % 3);
+    }, 9000);
+    
+    // Game carousel rotates 3 seconds after Arena
+    const gameInterval = setInterval(() => {
+      setGameIndex(prev => (prev + 1) % 3);
+    }, 9000);
+    
+    // Team carousel rotates 6 seconds after Arena
+    const teamInterval = setInterval(() => {
+      setTeamIndex(prev => (prev + 1) % 3);
+    }, 9000);
+    
+    // Initial staggered start for Game and Team carousels
+    const gameStart = setTimeout(() => {
+      setGameIndex(prev => (prev + 1) % 3);
+    }, 3000);
+    
+    const teamStart = setTimeout(() => {
+      setTeamIndex(prev => (prev + 1) % 3);
+    }, 6000);
+    
+    return () => {
+      clearInterval(arenaInterval);
+      clearInterval(gameInterval);
+      clearInterval(teamInterval);
+      clearTimeout(gameStart);
+      clearTimeout(teamStart);
+    };
+  }, []);
 
   return (
     <div className="gallery-page" style={{
@@ -53,7 +93,7 @@ const GalleryPage = () => {
             marginBottom: '4rem'
           }}>
             <div style={{ flex: 1, minWidth: '520px' }}>
-              <ArenaCarousel />
+              <ArenaCarousel currentIndex={arenaIndex} />
             </div>
             <div style={{ 
               flex: 1,
@@ -138,7 +178,7 @@ const GalleryPage = () => {
                 </div>
               </div>
               <div style={{ flex: 1, minWidth: '520px' }}>
-                <GameCarousel />
+                <GameCarousel currentIndex={gameIndex} />
               </div>
             </div>
           </div>
@@ -161,7 +201,7 @@ const GalleryPage = () => {
             marginBottom: '4rem'
           }}>
             <div style={{ flex: 1, minWidth: '520px' }}>
-              <TeamCarousel />
+              <TeamCarousel currentIndex={teamIndex} />
             </div>
             <div style={{ 
               flex: 1,

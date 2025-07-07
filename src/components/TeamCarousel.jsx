@@ -29,23 +29,18 @@ const arrowButtonStyle = {
 
 const AUTO_SLIDE_INTERVAL = 3000; // 3 seconds
 
-const TeamCarousel = () => {
-  const [current, setCurrent] = useState(0);
+const TeamCarousel = ({ currentIndex }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const timeoutRef = useRef(null);
-
-  const prevPhoto = () => setCurrent((current - 1 + teamPhotos.length) % teamPhotos.length);
-  const nextPhoto = () => setCurrent((current + 1) % teamPhotos.length);
-
+  const [current, setCurrent] = useState(0);
+  
+  // Update current photo when currentIndex changes
   useEffect(() => {
-    if (!isHovered && !lightboxOpen) {
-      timeoutRef.current = setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % teamPhotos.length);
-      }, AUTO_SLIDE_INTERVAL);
-    }
-    return () => clearTimeout(timeoutRef.current);
-  }, [current, isHovered, lightboxOpen]);
+    setCurrent(prev => (prev + 1) % teamPhotos.length);
+  }, [currentIndex]);
+  
+  const prevPhoto = () => setCurrent(prev => (prev - 1 + teamPhotos.length) % teamPhotos.length);
+  const nextPhoto = () => setCurrent(prev => (prev + 1) % teamPhotos.length);
 
   return (
     <>
