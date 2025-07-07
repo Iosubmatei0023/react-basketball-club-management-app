@@ -246,6 +246,16 @@
   letter-spacing: 0.5px;
 }
 
+.plan-offset-basic {
+  margin-top: 80px;
+}
+.plan-offset-pro {
+  margin-top: 40px;
+}
+.plan-offset-premium {
+  margin-top: 0;
+}
+
 @media (max-width: 800px) {
   .plans-grid {
     grid-template-columns: 1fr;

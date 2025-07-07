@@ -185,15 +185,14 @@ const GalleryPage = () => {
 
           {/* Section 3: Our Team */}
           <h2 style={{
-            color: "#ffb07c",
-            fontSize: "1.6rem",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            fontWeight: "600",
-            margin: "4rem 0 1.5rem 0",
-            paddingLeft: '1.5rem',
-            letterSpacing: "1px"
-          }}>Our Team</h2>
+              color: "#ffb07c",
+              fontSize: "1.6rem",
+              textTransform: "uppercase",
+              letterSpacing: "1px",
+              fontWeight: "600",
+              margin: "4rem 0 1.5rem 0",
+              paddingLeft: '1.5rem'
+            }}>Our Team</h2>
           
           <div style={{
             display: 'flex',

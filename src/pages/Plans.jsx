@@ -114,7 +114,7 @@ const Plans = () => {
               icon = <FontAwesomeIcon icon={['fas', 'crown']} className="plan-card-icon" />;
             }
             return (
-              <div key={index} className={`plan-card modern ${plan.title.toLowerCase()}`}>
+              <div key={index} className={`plan-card modern ${plan.title.toLowerCase()} plan-offset-${plan.title.toLowerCase()}`}>
                 <div className="plan-card-accent">{icon}</div>
                 <h2 className="plan-title modern-title">{plan.title}</h2>
                 <div className="plan-price modern-price">
