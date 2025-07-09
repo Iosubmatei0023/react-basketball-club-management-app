@@ -333,23 +333,25 @@ function AccountPage() {
             <span style={{ fontWeight: 600, color: '#444', width: 120, marginTop: 6 }}>Scheduled Events:</span>
             <div style={{
               color: '#333',
-              marginLeft: 10,
+              marginLeft: 0,
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: 'column',
               minWidth: 220,
-              padding: '10px 0 10px 0',
+              padding: '10px 16px 10px 16px',
               background: '#f8f9fa',
               borderRadius: 6,
               fontSize: 16,
               boxShadow: '0 1px 6px rgba(124,176,255,0.08)',
               letterSpacing: 0.1,
               wordBreak: 'break-word',
-              lineHeight: 1.7
+              lineHeight: 1.7,
+              border: '2px solid #7cb0ff',
+              paddingLeft: 16
             }}>
               {(userData?.scheduledEvents?.length > 0
                 ? userData.scheduledEvents.map((ev, idx) => (
                     <div
-                      key={typeof ev === 'string' ? ev : (ev?.eventName ? ev.eventName + ev.date : idx)}
+                      key={typeof ev === 'string' ? ev : ev?.eventName || idx}
                       style={{
                         padding: '2px 0',
                         borderBottom: idx !== userData.scheduledEvents.length - 1 ? '1px solid #e6eaf2' : 'none',
@@ -371,7 +373,7 @@ function AccountPage() {
                       {typeof ev === 'string' ? ev : `${ev?.eventName || JSON.stringify(ev)}${ev?.date ? ' – ' + ev.date : ''}`}
                     </div>
                   ))
-                : 'No scheduled events.')}
+                : 'Not set')}
 
             </div>
           </div>
