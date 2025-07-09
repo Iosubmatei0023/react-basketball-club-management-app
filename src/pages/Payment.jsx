@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faArrowLeft, faCheck, faCreditCard, faCalendarAlt, faUser, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import AnimatedWaveBackground from '../components/AnimatedWaveBackground';
 import '../styles/Payment.css';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Payment = () => {
+  const { user } = useAuth();
   const location = useLocation();
   const billingPeriod = location.state?.billingPeriod || 'monthly';
   const { planId } = useParams();
@@ -224,6 +228,18 @@ const Payment = () => {
     try {
       // Simulate API call with a delay
       await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Update membershipStatus in Firestore
+      if (user && user.uid && plan && plan.name) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          await updateDoc(docRef, {
+            membershipStatus: { planName: plan.name, period: billingPeriod }
+          });
+        } catch (err) {
+          console.error('Failed to update membership status in Firestore:', err);
+        }
+      }
       
       // Redirect to plans page with success state
       navigate('/plans', { 

@@ -76,13 +76,18 @@ export function AuthProvider({ children }) {
       // Create user document in Firestore
       const docRef = doc(db, 'users', user.uid);
       await setDoc(docRef, {
-        name: name,
+        displayName: name,
         email: email,
+        birthDate: "",
+        hometown: "",
+        attendedEvents: [],
+        scheduledEvents: [],
+        membershipStatus: { planName: "", period: "" },
         created: new Date().toISOString(),
         role: 'member'
       });
       
-      setUser({ ...user, name, email, role: 'member' });
+      setUser({ ...user, displayName: name, email, role: 'member' });
       return user;
     } catch (error) {
       throw error;

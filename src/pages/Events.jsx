@@ -4,8 +4,13 @@ import EventsNavbar from '../components/EventsNavbar';
 import Popout from '../components/Popout';
 import NewsletterPopout from '../components/NewsletterPopout';
 import DetailsPopout from '../components/DetailsPopout';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Events = () => {
+  const { user } = useAuth();
+
   const futureEvents = [
     {
       title: 'Young Talents Basketball Tournament 2025',
@@ -128,9 +133,31 @@ const Events = () => {
   const [detailsPopoutDetails, setDetailsPopoutDetails] = useState('');
 
   // Handler for Join Event
-  const handleJoinEvent = (event) => {
+  const handleJoinEvent = async (event) => {
     setPopoutMessage(`Congratulations! You joined this event on ${event.date}`);
     setPopoutOpen(true);
+
+    // Persist scheduled event in Firestore
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+        let scheduledEvents = [];
+        if (docSnap.exists()) {
+          scheduledEvents = docSnap.data().scheduledEvents || [];
+        }
+        // Avoid duplicates by checking if event with same title and date exists
+        const alreadyJoined = scheduledEvents.some(
+          (e) => e.eventName === event.title && e.date === event.date
+        );
+        if (!alreadyJoined) {
+          const updated = [...scheduledEvents, { eventName: event.title, date: event.date }];
+          await updateDoc(docRef, { scheduledEvents: updated });
+        }
+      } catch (err) {
+        console.error('Failed to update scheduled events in Firestore:', err);
+      }
+    }
   };
 
   return (

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
 import AnimatedWaveBackground from "../components/AnimatedWaveBackground";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 function AccountPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [selectedAttendedEvents, setSelectedAttendedEvents] = useState([]);
+  const [scheduledEvents, setScheduledEvents] = useState([]);
+  const [membershipStatus, setMembershipStatus] = useState({ planName: "", period: "" });
 
   // Redirect to login if user logs out
   useEffect(() => {
@@ -20,33 +23,120 @@ function AccountPage() {
   const [editMode, setEditMode] = useState(false);
   const [birthDate, setBirthDate] = useState("");
   const [hometown, setHometown] = useState("");
-  const [plan, setPlan] = useState("");
 
+  // Fetch user data from Firestore on mount
   useEffect(() => {
-    if (user) {
-      const userData = {
-        name: user.name || user.displayName || "",
-        email: user.email,
-        role: user.role || "Member",
-        membership: "Active",
-        joinDate: new Date(user.created || Date.now()).toLocaleDateString(),
-        birthDate: user.birthDate || "",
-        hometown: user.hometown || "",
-        plan: user.plan || ""
-      };
-      setUserData(userData);
-      setBirthDate(userData.birthDate);
-      setHometown(userData.hometown);
-      setPlan(userData.plan);
-      setLoading(false);
-    }
+    const fetchUserData = async () => {
+      if (user && user.uid) {
+        try {
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            setUserData(data);
+            setBirthDate(data.birthDate || "");
+            setHometown(data.hometown || "");
+            setSelectedAttendedEvents(data.attendedEvents || []);
+            setScheduledEvents(data.scheduledEvents || []);
+            setMembershipStatus(data.membershipStatus || { planName: "", period: "" });
+          }
+        } catch (err) {
+          console.error("Failed to fetch user data from Firestore:", err);
+        }
+        setLoading(false);
+      }
+    };
+    fetchUserData();
   }, [user]);
 
-  const handleSave = () => {
-    // TODO: Save birthDate and hometown to backend (Firestore)
+  // Save birthDate, hometown, and attended events to Firestore
+  const handleSave = async () => {
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {
+          birthDate,
+          hometown,
+          attendedEvents: selectedAttendedEvents
+        });
+        setUserData(prev => ({ ...prev, birthDate, hometown, attendedEvents: selectedAttendedEvents }));
+      } catch (err) {
+        console.error("Failed to update Firestore profile fields:", err);
+      }
+    }
+    // Re-fetch user data to ensure UI is in sync with Firestore
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setUserData(data);
+          setBirthDate(data.birthDate || "");
+          setHometown(data.hometown || "");
+          setSelectedAttendedEvents(data.attendedEvents || []);
+          setScheduledEvents(data.scheduledEvents || []);
+          setMembershipStatus(data.membershipStatus || { planName: "", period: "" });
+        }
+      } catch (err) {
+        console.error("Failed to re-fetch user data after save:", err);
+      }
+    }
     setEditMode(false);
-    setUserData(prev => ({ ...prev, birthDate, hometown }));
   };
+
+
+  // Save attended events to Firestore
+  const handleAttendedEventsChange = async (events) => {
+    setSelectedAttendedEvents(events);
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {
+          attendedEvents: events
+        });
+        setUserData(prev => ({ ...prev, attendedEvents: events }));
+      } catch (err) {
+        console.error("Failed to update attended events in Firestore:", err);
+      }
+    }
+  };
+
+  // Placeholder for updating scheduled events from Events page
+  const addScheduledEvent = async (eventObj) => {
+    // eventObj: { eventName, date }
+    const updated = [...scheduledEvents, eventObj];
+    setScheduledEvents(updated);
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {
+          scheduledEvents: updated
+        });
+        setUserData(prev => ({ ...prev, scheduledEvents: updated }));
+      } catch (err) {
+        console.error("Failed to update scheduled events in Firestore:", err);
+      }
+    }
+  };
+
+  // Placeholder for updating membership status from Plans page
+  const updateMembershipStatus = async (planName, period) => {
+    const status = { planName, period };
+    setMembershipStatus(status);
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {
+          membershipStatus: status
+        });
+        setUserData(prev => ({ ...prev, membershipStatus: status }));
+      } catch (err) {
+        console.error("Failed to update membership status in Firestore:", err);
+      }
+    }
+  };
+
 
   if (loading) {
     return (
@@ -107,9 +197,9 @@ function AccountPage() {
             fontWeight: 700,
             margin: '0 auto 1rem'
           }}>
-            {userData.name[0].toUpperCase()}
+            {(userData?.name?.[0]?.toUpperCase() || userData?.displayName?.[0]?.toUpperCase() || '?')}
           </div>
-          <h1 style={{ margin: 0, fontWeight: 700, fontSize: 32 }}>{userData.name}</h1>
+          <h1 style={{ margin: 0, fontWeight: 700, fontSize: 32 }}>{userData?.name || userData?.displayName || 'Unknown User'}</h1>
           <p style={{ color: '#7cb0ff', margin: '0.5rem 0 0' }}>{userData.email}</p>
         </div>
 
@@ -120,8 +210,10 @@ function AccountPage() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Membership Status:</span>
-            <span style={{ color: userData.plan ? '#7cb0ff' : '#e67e22', fontWeight: 600, marginLeft: 10 }}>
-              {userData.plan ? userData.plan : 'No membership acquired'}
+            <span style={{ color: userData?.membershipStatus?.planName ? '#7cb0ff' : '#e67e22', fontWeight: 600, marginLeft: 10 }}>
+              {userData?.membershipStatus?.planName
+                ? `${userData.membershipStatus.planName} (${userData.membershipStatus.period || 'N/A'})`
+                : 'No membership acquired'}
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
@@ -195,13 +287,13 @@ function AccountPage() {
                 border: '2px solid #ffb07c',
                 paddingLeft: 16
               }}>
-                {selectedAttendedEvents.length > 0
-                  ? selectedAttendedEvents.map((ev, idx) => (
+                {(userData?.attendedEvents?.length > 0
+                  ? userData.attendedEvents.map((ev, idx) => (
                       <div
-                        key={ev}
+                        key={typeof ev === 'string' ? ev : ev?.eventName || idx}
                         style={{
                           padding: '2px 0',
-                          borderBottom: idx !== selectedAttendedEvents.length - 1 ? '1px solid #e6eaf2' : 'none',
+                          borderBottom: idx !== userData.attendedEvents.length - 1 ? '1px solid #e6eaf2' : 'none',
                           marginBottom: 2,
                           fontWeight: 500,
                           display: 'flex',
@@ -217,10 +309,11 @@ function AccountPage() {
                           marginRight: 10,
                           marginLeft: 0
                         }}></span>
-                        {ev}
+                        {typeof ev === 'string' ? ev : ev?.eventName || JSON.stringify(ev)}
                       </div>
                     ))
-                  : 'Not set'}
+                  : 'Not set')}
+
               </div>
             )}
           </div>
@@ -243,7 +336,33 @@ function AccountPage() {
               wordBreak: 'break-word',
               lineHeight: 1.7
             }}>
-              No scheduled events.
+              {(userData?.scheduledEvents?.length > 0
+                ? userData.scheduledEvents.map((ev, idx) => (
+                    <div
+                      key={typeof ev === 'string' ? ev : (ev?.eventName ? ev.eventName + ev.date : idx)}
+                      style={{
+                        padding: '2px 0',
+                        borderBottom: idx !== userData.scheduledEvents.length - 1 ? '1px solid #e6eaf2' : 'none',
+                        marginBottom: 2,
+                        fontWeight: 500,
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <span style={{
+                        display: 'inline-block',
+                        width: 8,
+                        height: 8,
+                        borderRadius: '50%',
+                        background: '#7cb0ff',
+                        marginRight: 10,
+                        marginLeft: 0
+                      }}></span>
+                      {typeof ev === 'string' ? ev : `${ev?.eventName || JSON.stringify(ev)}${ev?.date ? ' – ' + ev.date : ''}`}
+                    </div>
+                  ))
+                : 'No scheduled events.')}
+
             </div>
           </div>
         </div>
