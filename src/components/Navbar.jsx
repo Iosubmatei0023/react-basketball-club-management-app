@@ -99,28 +99,7 @@ const Navbar = () => {
             }}>
             Gallery
           </Link>
-          <Link to="/plans"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
-              e.currentTarget.style.color = '#7cb0ff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-              e.currentTarget.style.color = 'white';
-            }}
-            style={{
-              color: 'white',
-              textDecoration: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              fontSize: '1rem',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-            Plans
-          </Link>
+
 
         </div>
       </div>

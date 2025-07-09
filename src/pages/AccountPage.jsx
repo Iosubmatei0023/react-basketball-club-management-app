@@ -206,7 +206,11 @@ function AccountPage() {
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Joined:</span>
-            <span style={{ color: '#333', marginLeft: 10 }}>{userData.joinDate}</span>
+            <span style={{ color: '#333', marginLeft: 10 }}>
+              {userData?.created
+                ? new Date(userData.created).toLocaleDateString()
+                : 'Not set'}
+            </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Membership Status:</span>

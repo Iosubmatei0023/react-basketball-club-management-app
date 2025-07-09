@@ -46,7 +46,14 @@ export function AuthProvider({ children }) {
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setUser({ ...user, ...docSnap.data() });
+        const userData = docSnap.data();
+        if (!userData.joinDate) {
+          const joinDate = new Date().toISOString();
+          await setDoc(docRef, { ...userData, joinDate }, { merge: true });
+          setUser({ ...user, ...userData, joinDate });
+        } else {
+          setUser({ ...user, ...userData });
+        }
       } else {
         // Create new user document if it doesn't exist
         await setDoc(docRef, {
@@ -83,11 +90,12 @@ export function AuthProvider({ children }) {
         attendedEvents: [],
         scheduledEvents: [],
         membershipStatus: { planName: "", period: "" },
+        joinDate: new Date().toISOString(),
         created: new Date().toISOString(),
         role: 'member'
       });
       
-      setUser({ ...user, displayName: name, email, role: 'member' });
+      setUser({ ...user, displayName: name, email, role: 'member', joinDate: new Date().toISOString() });
       return user;
     } catch (error) {
       throw error;
