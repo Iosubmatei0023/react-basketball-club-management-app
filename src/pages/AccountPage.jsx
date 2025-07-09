@@ -139,19 +139,11 @@ function AccountPage() {
 
 
   if (loading) {
-    return (
-      <div className="account-container">
-        <div className="account-box">
-          <div className="loading-header">
-            <h2>My Account</h2>
-            <p>Loading your account information...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
-  if (!user) {
+  // Only check user after loading is false
+  if (!loading && !user) {
     return (
       <div className="account-container">
         <div className="account-box">
