@@ -92,7 +92,8 @@ export function AuthProvider({ children }) {
         membershipStatus: { planName: "", period: "" },
         joinDate: new Date().toISOString(),
         created: new Date().toISOString(),
-        role: 'member'
+        role: 'member',
+        newsletterJoined: false
       });
       
       setUser({ ...user, displayName: name, email, role: 'member', joinDate: new Date().toISOString() });

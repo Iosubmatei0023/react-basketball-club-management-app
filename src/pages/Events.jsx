@@ -186,9 +186,21 @@ const Events = () => {
                 ) : event.button?.text === 'Join Our Newsletter' ? (
                   <button
                     className={`event-button ${event.button?.color}`}
-                    onClick={() => {
-                      setPopoutMessage('Thank you for joining our newsletter.');
-                      setPopoutOpen(true);
+                    onClick={async () => {
+                      if (user && user.uid) {
+                        try {
+                          const docRef = doc(db, 'users', user.uid);
+                          await updateDoc(docRef, { newsletterJoined: true });
+                          setPopoutMessage('Thank you for joining our newsletter.');
+                          setPopoutOpen(true);
+                        } catch (err) {
+                          setPopoutMessage('Failed to join the newsletter. Please try again.');
+                          setPopoutOpen(true);
+                        }
+                      } else {
+                        setPopoutMessage('Please log in to join the newsletter.');
+                        setPopoutOpen(true);
+                      }
                     }}
                   >
                     {event.button?.text}
@@ -219,9 +231,21 @@ const Events = () => {
                 ) : event.button?.text === 'Join Our Newsletter' ? (
                   <button
                     className={`event-button ${event.button?.color}`}
-                    onClick={() => {
-                      setPopoutMessage('Thank you for joining our newsletter.');
-                      setPopoutOpen(true);
+                    onClick={async () => {
+                      if (user && user.uid) {
+                        try {
+                          const docRef = doc(db, 'users', user.uid);
+                          await updateDoc(docRef, { newsletterJoined: true });
+                          setPopoutMessage('Thank you for joining our newsletter.');
+                          setPopoutOpen(true);
+                        } catch (err) {
+                          setPopoutMessage('Failed to join the newsletter. Please try again.');
+                          setPopoutOpen(true);
+                        }
+                      } else {
+                        setPopoutMessage('Please log in to join the newsletter.');
+                        setPopoutOpen(true);
+                      }
                     }}
                   >
                     {event.button?.text}

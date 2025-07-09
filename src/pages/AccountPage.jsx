@@ -221,6 +221,12 @@ function AccountPage() {
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+            <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Newsletter:</span>
+            <span style={{ color: userData?.newsletterJoined ? '#7cb0ff' : '#e67e22', fontWeight: 600, marginLeft: 10 }}>
+              {userData?.newsletterJoined ? 'Joined' : 'Not joined'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontWeight: 600, color: '#444', width: 120 }}>Birth Date:</span>
             {editMode ? (
               <input
