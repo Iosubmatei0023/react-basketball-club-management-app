@@ -134,29 +134,53 @@ const Events = () => {
 
   // Handler for Join Event
   const handleJoinEvent = async (event) => {
-    setPopoutMessage(`Congratulations! You joined this event on ${event.date}`);
-    setPopoutOpen(true);
+    if (!user || !user.uid) {
+      setPopoutMessage('Please log in to join this event.');
+      setPopoutOpen(true);
+      return;
+    }
 
-    // Persist scheduled event in Firestore
-    if (user && user.uid) {
-      try {
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-        let scheduledEvents = [];
-        if (docSnap.exists()) {
-          scheduledEvents = docSnap.data().scheduledEvents || [];
-        }
-        // Avoid duplicates by checking if event with same title and date exists
-        const alreadyJoined = scheduledEvents.some(
-          (e) => e.eventName === event.title && e.date === event.date
-        );
-        if (!alreadyJoined) {
-          const updated = [...scheduledEvents, { eventName: event.title, date: event.date }];
-          await updateDoc(docRef, { scheduledEvents: updated });
-        }
-      } catch (err) {
-        console.error('Failed to update scheduled events in Firestore:', err);
+    try {
+      const docRef = doc(db, 'users', user.uid);
+      // Always get the latest scheduledEvents from Firestore
+      let docSnap = await getDoc(docRef);
+      let scheduledEvents = [];
+      if (docSnap.exists()) {
+        scheduledEvents = docSnap.data().scheduledEvents || [];
       }
+      // Normalize for comparison
+      const normalize = (s) => String(s).trim().toLowerCase();
+      const joinedEvent = scheduledEvents.find(
+        (e) =>
+          normalize(e.eventName) === normalize(event.title) &&
+          normalize(e.date) === normalize(event.date)
+      );
+      if (joinedEvent) {
+        setPopoutMessage(`You already joined this event on ${joinedEvent.date}`);
+        setPopoutOpen(true);
+        return;
+      }
+      // Not joined, add event, then re-fetch and show popout
+      const updated = [...scheduledEvents, { eventName: event.title, date: event.date }];
+      await updateDoc(docRef, { scheduledEvents: updated });
+      // Re-fetch to confirm
+      docSnap = await getDoc(docRef);
+      scheduledEvents = docSnap.exists() ? docSnap.data().scheduledEvents || [] : [];
+      const newJoinedEvent = scheduledEvents.find(
+        (e) =>
+          normalize(e.eventName) === normalize(event.title) &&
+          normalize(e.date) === normalize(event.date)
+      );
+      setPopoutMessage(
+        newJoinedEvent
+          ? `Congratulations! You joined this event on ${newJoinedEvent.date}`
+          : `Congratulations! You joined this event on ${event.date}`
+      );
+      setPopoutOpen(true);
+    } catch (err) {
+      setPopoutMessage('Failed to join event. Please try again.');
+      setPopoutOpen(true);
+      console.error('Failed to update scheduled events in Firestore:', err);
     }
   };
 
@@ -190,8 +214,26 @@ const Events = () => {
                       if (user && user.uid) {
                         try {
                           const docRef = doc(db, 'users', user.uid);
+                          // Always get latest from Firestore
+                          let docSnap = await getDoc(docRef);
+                          let newsletterJoined = false;
+                          if (docSnap.exists()) {
+                            newsletterJoined = !!docSnap.data().newsletterJoined;
+                          }
+                          if (newsletterJoined) {
+                            setPopoutMessage('You have already joined our newsletter.');
+                            setPopoutOpen(true);
+                            return;
+                          }
                           await updateDoc(docRef, { newsletterJoined: true });
-                          setPopoutMessage('Thank you for joining our newsletter.');
+                          // Re-fetch to confirm
+                          docSnap = await getDoc(docRef);
+                          newsletterJoined = docSnap.exists() ? !!docSnap.data().newsletterJoined : false;
+                          setPopoutMessage(
+                            newsletterJoined
+                              ? 'Thank you for joining our newsletter.'
+                              : 'Thank you for joining our newsletter.'
+                          );
                           setPopoutOpen(true);
                         } catch (err) {
                           setPopoutMessage('Failed to join the newsletter. Please try again.');
@@ -235,8 +277,26 @@ const Events = () => {
                       if (user && user.uid) {
                         try {
                           const docRef = doc(db, 'users', user.uid);
+                          // Always get latest from Firestore
+                          let docSnap = await getDoc(docRef);
+                          let newsletterJoined = false;
+                          if (docSnap.exists()) {
+                            newsletterJoined = !!docSnap.data().newsletterJoined;
+                          }
+                          if (newsletterJoined) {
+                            setPopoutMessage('You have already joined our newsletter.');
+                            setPopoutOpen(true);
+                            return;
+                          }
                           await updateDoc(docRef, { newsletterJoined: true });
-                          setPopoutMessage('Thank you for joining our newsletter.');
+                          // Re-fetch to confirm
+                          docSnap = await getDoc(docRef);
+                          newsletterJoined = docSnap.exists() ? !!docSnap.data().newsletterJoined : false;
+                          setPopoutMessage(
+                            newsletterJoined
+                              ? 'Thank you for joining our newsletter.'
+                              : 'Thank you for joining our newsletter.'
+                          );
                           setPopoutOpen(true);
                         } catch (err) {
                           setPopoutMessage('Failed to join the newsletter. Please try again.');
