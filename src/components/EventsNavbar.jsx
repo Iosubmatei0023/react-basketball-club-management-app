@@ -52,7 +52,7 @@ const EventsNavbar = () => {
           display: 'flex',
           gap: '0.5rem'
         }}>
-          <Link to="/events"
+          <Link to="/plans"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 15px rgba(124, 176, 255, 0.4)';
               e.currentTarget.style.color = '#7cb0ff';
@@ -72,7 +72,7 @@ const EventsNavbar = () => {
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
             }}>
-            Events
+            Plans
           </Link>
           <Link to="/gallery"
             onMouseEnter={(e) => {
