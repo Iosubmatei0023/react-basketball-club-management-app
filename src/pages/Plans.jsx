@@ -1,15 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Popout from '../components/Popout';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { useAuth } from '../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faBasketballBall, faTrophy, faCrown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Plans.css';
 import EventsNavbar from '../components/EventsNavbar';
 
 const Plans = () => {
+  const { user } = useAuth();
+  const [membershipStatus, setMembershipStatus] = useState({ planName: '', period: '' });
+  const [loadingStatus, setLoadingStatus] = useState(true);
+  const [popoutOpen, setPopoutOpen] = useState(false);
+  const [popoutMessage, setPopoutMessage] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Fetch membership status if user is logged in
+    const fetchMembershipStatus = async () => {
+      if (user && user.uid) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setMembershipStatus(docSnap.data().membershipStatus || { planName: '', period: '' });
+          }
+        } catch (err) {
+          // Optionally handle error
+        }
+      }
+      setLoadingStatus(false);
+    };
+    fetchMembershipStatus();
+  }, [user]);
 
   useEffect(() => {
     // Check for success state in location state
@@ -92,6 +120,11 @@ const Plans = () => {
           {successMessage}
         </div>
       )}
+      <Popout
+        open={popoutOpen}
+        onClose={() => setPopoutOpen(false)}
+        message={popoutMessage || 'You already have an active plan.'}
+      />
       <div className="plans-container">
         <h1 className="plans-title">Choose Your Plan</h1>
         {/* Billing period toggle */}
@@ -136,7 +169,17 @@ const Plans = () => {
                   type="button"
                   className="plan-button modern-btn"
                   style={{ background: 'linear-gradient(90deg, #7cb0ff 0%, #ffb07c 100%)', color: '#fff', marginTop: '1rem' }}
-                  onClick={() => { navigate(plan.button.link, { state: { billingPeriod } }); }}
+                  onClick={() => {
+                    if (loadingStatus) return;
+                    // Only check for active plan if user is logged in
+                    if (user && membershipStatus && membershipStatus.planName && membershipStatus.planName !== '') {
+                      setPopoutMessage('You already have an active plan.');
+                      setPopoutOpen(true);
+                    } else {
+                      navigate(plan.button.link, { state: { billingPeriod } });
+                    }
+                  }}
+                  disabled={loadingStatus}
                 >
                   {plan.button.text} <FontAwesomeIcon icon={['fas', 'arrow-right']} style={{ marginLeft: 8 }} />
                 </button>
