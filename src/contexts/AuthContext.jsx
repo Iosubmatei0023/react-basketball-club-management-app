@@ -115,23 +115,40 @@ export function AuthProvider({ children }) {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      return result.user;
+      const user = result.user;
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setUser({ ...user, ...docSnap.data() });
+      } else {
+        // Create new user document with default fields
+        const userData = {
+          displayName: user.displayName,
+          email: user.email,
+          birthDate: "",
+          hometown: "",
+          attendedEvents: [],
+          scheduledEvents: [],
+          membershipStatus: { planName: "", period: "" },
+          joinDate: new Date().toISOString(),
+          created: new Date().toISOString(),
+          role: 'member',
+          newsletterJoined: false
+        };
+        await setDoc(docRef, userData);
+        setUser({ ...user, ...userData });
+      }
+      return user;
     } catch (error) {
       throw error;
     }
   };
 
-  if (loading) {
-    return <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh'
-    }}>Loading...</div>;
-  }
+
+  // Always provide the AuthContext, let pages handle loading UI
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, login, register, logout, signInWithGoogle, loading }}>
       {children}
     </AuthContext.Provider>
   );
