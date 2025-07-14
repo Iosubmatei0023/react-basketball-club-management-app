@@ -108,7 +108,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <a href="#" className="forgot-password">Forgot Password?</a>
+
             </div>
             <button type="submit" className="login-button" disabled={loading}>
               {loading ? "Signing In..." : "Sign In"}

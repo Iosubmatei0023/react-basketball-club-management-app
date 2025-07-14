@@ -15,7 +15,7 @@ function AccountPage() {
   const [selectedAttendedEvents, setSelectedAttendedEvents] = useState([]);
   const [scheduledEvents, setScheduledEvents] = useState([]);
   const [membershipStatus, setMembershipStatus] = useState({ planName: "", period: "" });
-  const [newsletter, setNewsletter] = useState(false);
+  const [newsletterJoined, setNewsletterJoined] = useState(false);
 
   // Add a loading state for userData
   const [userDataLoading, setUserDataLoading] = useState(true);
@@ -48,6 +48,7 @@ function AccountPage() {
             setSelectedAttendedEvents(data.attendedEvents || []);
             setScheduledEvents(data.scheduledEvents || []);
             setMembershipStatus(data.membershipStatus || { planName: "", period: "" });
+            setNewsletterJoined(typeof data.newsletterJoined === 'boolean' ? data.newsletterJoined : false);
           } else {
             console.log('AccountPage: Firestore user doc NOT found for uid', user?.uid);
             setUserData(null);
@@ -78,9 +79,9 @@ function AccountPage() {
           birthDate,
           hometown,
           attendedEvents: selectedAttendedEvents,
-          newsletter
+          newsletterJoined
         });
-        setUserData(prev => ({ ...prev, birthDate, hometown, attendedEvents: selectedAttendedEvents, newsletter }));
+        setUserData(prev => ({ ...prev, birthDate, hometown, attendedEvents: selectedAttendedEvents, newsletterJoined }));
       } catch (err) {
         console.error("Failed to update Firestore profile fields:", err);
       }
@@ -98,6 +99,7 @@ function AccountPage() {
           setSelectedAttendedEvents(data.attendedEvents || []);
           setScheduledEvents(data.scheduledEvents || []);
           setMembershipStatus(data.membershipStatus || { planName: "", period: "" });
+          setNewsletterJoined(typeof data.newsletterJoined === 'boolean' ? data.newsletterJoined : false);
         }
       } catch (err) {
         // handle error
@@ -208,17 +210,17 @@ function AccountPage() {
               <label style={{ marginLeft: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input
                   type="checkbox"
-                  checked={newsletter}
-                  onChange={e => setNewsletter(e.target.checked)}
+                  checked={newsletterJoined}
+                  onChange={e => setNewsletterJoined(e.target.checked)}
                   style={{ width: 18, height: 18 }}
                 />
                 <span style={{ color: '#333', fontSize: 16 }}>
-                  {newsletter ? 'Joined' : 'Not Joined'}
+                  {newsletterJoined ? 'Joined' : 'Not Joined'}
                 </span>
               </label>
             ) : (
-              <span style={{ color: newsletter ? '#27ae60' : '#e74c3c', marginLeft: 10, fontWeight: 600 }}>
-                {newsletter ? 'Joined' : 'Not Joined'}
+              <span style={{ color: newsletterJoined ? '#27ae60' : '#e74c3c', marginLeft: 10, fontWeight: 600 }}>
+                {newsletterJoined ? 'Joined' : 'Not Joined'}
               </span>
             )}
           </div>
