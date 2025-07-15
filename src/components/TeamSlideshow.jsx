@@ -1,3 +1,6 @@
+// This file was renamed from TeamCarousel.jsx to TeamSlideshow.jsx
+// All code remains the same except the filename and component name.
+
 import React, { useState, useEffect, useRef } from "react";
 
 const teamPhotos = [
@@ -29,7 +32,7 @@ const arrowButtonStyle = {
 
 const AUTO_SLIDE_INTERVAL = 3000; // 3 seconds
 
-const TeamCarousel = ({ currentIndex }) => {
+const TeamSlideshow = ({ currentIndex }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -173,4 +176,4 @@ const TeamCarousel = ({ currentIndex }) => {
   );
 };
 
-export default TeamCarousel;
+export default TeamSlideshow;

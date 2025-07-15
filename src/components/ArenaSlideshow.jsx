@@ -1,3 +1,6 @@
+// This file was renamed from ArenaCarousel.jsx to ArenaSlideshow.jsx
+// All code remains the same except the filename and component name.
+
 import React, { useState, useEffect, useRef } from "react";
 
 const arenaPhotos = [
@@ -29,7 +32,7 @@ const arrowButtonStyle = {
 
 const AUTO_SLIDE_INTERVAL = 3000; // 3 seconds
 
-const ArenaCarousel = ({ currentIndex }) => {
+const ArenaSlideshow = ({ currentIndex }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -172,4 +175,4 @@ const ArenaCarousel = ({ currentIndex }) => {
   );
 };
 
-export default ArenaCarousel;
+export default ArenaSlideshow;

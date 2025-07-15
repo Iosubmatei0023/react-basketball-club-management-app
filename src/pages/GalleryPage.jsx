@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/Gallery.css';
 import GalleryNavbar from '../components/GalleryNavbar';
-import ArenaCarousel from '../components/ArenaCarousel';
-import GameCarousel from '../components/GameCarousel';
-import TeamCarousel from '../components/TeamCarousel';
+import ArenaSlideshow from '../components/ArenaSlideshow';
+import GameSlideshow from '../components/GameSlideshow';
+import TeamSlideshow from '../components/TeamSlideshow';
 import TeamDetailsCard from '../components/TeamDetailsCard';
 
 const GalleryPage = () => {
@@ -93,7 +93,7 @@ const GalleryPage = () => {
             marginBottom: '4rem'
           }}>
             <div style={{ flex: 1, minWidth: '520px' }}>
-              <ArenaCarousel currentIndex={arenaIndex} />
+              <ArenaSlideshow currentIndex={arenaIndex} />
             </div>
             <div style={{ 
               flex: 1,
@@ -178,7 +178,7 @@ const GalleryPage = () => {
                 </div>
               </div>
               <div style={{ flex: 1, minWidth: '520px' }}>
-                <GameCarousel currentIndex={gameIndex} />
+                <GameSlideshow currentIndex={gameIndex} />
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ const GalleryPage = () => {
             marginBottom: '4rem'
           }}>
             <div style={{ flex: 1, minWidth: '520px' }}>
-              <TeamCarousel currentIndex={teamIndex} />
+              <TeamSlideshow currentIndex={teamIndex} />
             </div>
             <div style={{ 
               flex: 1,
